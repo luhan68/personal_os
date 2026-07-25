@@ -1,0 +1,23 @@
+# ── Season OS personal data / backups (never commit) ──────────
+# The app exports your journal + todos as dated files. Keep them local.
+season-os-*.json
+morning-pages-*.md
+*backup*.json
+backups/
+data/
+
+# ── Secrets / credentials ─────────────────────────────────────
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+supabase-service-role*
+service_role*
+
+# ── OS / editor cruft ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
