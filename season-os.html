@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>半年 · The Season</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#14161b;
+    --ink-soft:#4b4f58;
+    --muted:#7c8078;
+    --paper:#edeee8;
+    --paper-2:#e5e7de;
+    --card:#f6f7f2;
+    --rule:#c9cbc1;
+    --rule-soft:#dcded4;
+    --live:#e4402b;
+    --deep:#1e2a4a;
+    --moss:#5c7a54;
+    --display:"Bricolage Grotesque","Noto Sans SC",system-ui,sans-serif;
+    --body:"Newsreader","Noto Sans SC",Georgia,serif;
+    --data:"DM Mono","Noto Sans SC",ui-monospace,monospace;
+    --gap:clamp(16px,3vw,28px);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink)}
+  body{
+    font-family:var(--body);font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding:clamp(14px,3vw,40px) clamp(12px,4vw,48px) 96px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+  h1,h2,h3,.d{font-family:var(--display);font-weight:700;letter-spacing:-.01em}
+  .mono{font-family:var(--data);font-variant-numeric:tabular-nums}
+  button{font:inherit;color:inherit;cursor:pointer}
+  button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,
+  [tabindex]:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+  input,textarea,select{font:inherit;color:inherit;background:transparent;border:none}
+
+  /* ── masthead ─────────────────────────────── */
+  header.mast{border-top:2px solid var(--ink);padding-top:12px;margin-bottom:var(--gap)}
+  .mast-row{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:baseline;justify-content:space-between}
+  .season-title{font-size:clamp(30px,6.4vw,58px);line-height:.95;margin:0;font-weight:800}
+  .season-title span{font-family:var(--data);font-size:.32em;font-weight:400;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px;letter-spacing:.24em}
+  .countdown{text-align:right}
+  .countdown b{font-family:var(--data);font-size:clamp(26px,5vw,40px);font-weight:500;display:block;line-height:1}
+  .countdown small{font-family:var(--data);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .season-bar{height:6px;background:var(--paper-2);margin-top:14px;position:relative;overflow:hidden}
+  .season-bar i{position:absolute;inset:0 auto 0 0;background:var(--deep)}
+  .mast-sub{font-family:var(--data);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 18px}
+
+  /* ── physique program ─────────────────────── */
+  .program{display:grid;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);
+    grid-template-columns:repeat(auto-fit,minmax(288px,1fr))}
+  .sess{background:var(--card);padding:16px 16px 14px}
+  .sess.today{background:#fff;box-shadow:inset 3px 0 0 var(--live)}
+  .sess .when{font-family:var(--data);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .sess.today .when{color:var(--live)}
+  .sess h3{margin:5px 0 2px;font-size:18px;line-height:1.15}
+  .sess .aim{font-family:var(--display);font-weight:500;font-size:12.5px;color:var(--ink-soft);
+    line-height:1.4;margin-bottom:11px}
+  .ex{display:flex;gap:9px;align-items:flex-start;padding:6px 0;border-top:1px solid var(--rule-soft);
+    width:100%;background:none;border-left:none;border-right:none;border-bottom:none;text-align:left}
+  .ex:hover{background:var(--paper-2)}
+  .ex .mark{flex:0 0 auto;width:14px;height:14px;margin-top:4px;border:1.5px solid var(--ink);border-radius:2px}
+  .ex[aria-pressed="true"] .mark{background:var(--moss);border-color:var(--moss)}
+  .ex[aria-pressed="true"] .nm{color:var(--muted)}
+  .ex .body{flex:1;min-width:0}
+  .ex .nm{font-family:var(--display);font-weight:700;font-size:14.5px;line-height:1.25}
+  .ex .nm i{font-style:normal;font-weight:500;color:var(--ink-soft)}
+  .ex .why{font-family:var(--body);font-size:13.5px;color:var(--muted);line-height:1.35;margin-top:2px}
+  .ex .rx{flex:0 0 auto;font-family:var(--data);font-size:12px;color:var(--ink-soft);margin-top:3px}
+  .cnq{font-family:var(--display);font-weight:500;font-size:13px;color:var(--muted);margin-left:6px}
+  .tape{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:1px;
+    background:var(--rule-soft);border:1px solid var(--rule-soft);margin-bottom:14px}
+  .tape label{background:var(--card);padding:9px 10px 10px;display:block}
+  .tape label span{display:block;font-family:var(--data);font-size:9.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted)}
+  .tape label i{font-style:normal;display:block;font-family:var(--display);font-size:11.5px;color:var(--ink-soft)}
+  .tape input{width:100%;font-family:var(--data);font-size:21px;text-align:left;padding-top:3px}
+  .ratios{display:flex;flex-wrap:wrap;gap:8px 26px;padding:10px 0 14px;border-top:1px solid var(--rule-soft)}
+  .ratios div{font-family:var(--data);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .ratios b{display:block;font-size:24px;letter-spacing:0;text-transform:none;color:var(--ink);
+    font-weight:500;margin-top:3px}
+  .ratios b em{font-style:normal;font-size:11px;color:var(--muted);margin-left:5px}
+
+  /* ── morning pages ────────────────────────── */
+  .pages{background:#fbfbf7;border:1px solid var(--rule-soft);padding:20px clamp(16px,3vw,30px) 18px}
+  .pages .rule{font-family:var(--data);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px}
+  #pageText{width:100%;min-height:190px;font-family:var(--body);font-size:19px;line-height:1.62;
+    border:none;resize:vertical;background:transparent;color:var(--ink)}
+  #pageText::placeholder{color:#a9ada4;font-style:italic}
+  .pages-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:12px;
+    border-top:1px solid var(--rule-soft);padding-top:12px}
+  .wordbar{flex:1 1 200px;height:5px;background:var(--paper-2);position:relative;min-width:120px}
+  .wordbar i{position:absolute;inset:0 auto 0 0;background:var(--deep)}
+  .wordbar i.full{background:var(--moss)}
+  .wc{font-family:var(--data);font-size:13px;color:var(--muted)}
+  .wc b{color:var(--ink);font-size:19px;font-weight:500}
+
+  /* ── crm ──────────────────────────────────── */
+  .crm{background:var(--card);border:1px solid var(--rule-soft)}
+  .crm-head{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-bottom:1px solid var(--rule-soft)}
+  .chip{border:1px solid var(--rule);background:transparent;padding:5px 12px;
+    font-family:var(--data);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+  .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .chip.charge[aria-pressed="true"]{background:var(--live);border-color:var(--live);color:#fff}
+  .person{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding:11px 16px;
+    border-bottom:1px solid var(--rule-soft)}
+  .person:last-child{border-bottom:none}
+  .person .who{flex:1 1 190px;min-width:0}
+  .person .who b{font-family:var(--display);font-size:16.5px;font-weight:700;display:block;line-height:1.2}
+  .person .who span{font-family:var(--body);font-size:14px;color:var(--muted);line-height:1.35}
+  .tier{font-family:var(--data);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+    border:1px solid var(--rule);padding:2px 7px;white-space:nowrap}
+  .tier.inner{border-color:var(--deep);color:var(--deep)}
+  .tier.want{border-color:var(--live);color:var(--live)}
+  .due{font-family:var(--data);font-size:11.5px;white-space:nowrap;color:var(--muted)}
+  .due.over{color:var(--live)}
+  .due.fresh{color:var(--moss)}
+  .spark{width:9px;height:9px;border-radius:50%;background:var(--live);flex:0 0 auto}
+  .person input.next{flex:1 1 160px;border-bottom:1px solid var(--rule-soft);font-size:14.5px;padding:3px 2px}
+  .crm-add{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;background:var(--paper-2)}
+  .crm-add input{flex:1 1 150px;border-bottom:1px solid var(--rule);padding:4px 2px;font-size:15px}
+  .crm-add select{border-bottom:1px solid var(--rule);padding:4px 2px;font-family:var(--data);font-size:12.5px}
+
+  /* ── event lab ────────────────────────────── */
+  .events{display:grid;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);
+    grid-template-columns:repeat(auto-fit,minmax(266px,1fr))}
+  .ev{background:var(--card);padding:15px 16px 14px;display:flex;flex-direction:column;gap:8px}
+  .ev.held{background:#eef1ec}
+  .ev h3{margin:0;font-size:17px;line-height:1.18}
+  .ev .cn2{font-family:var(--display);font-weight:500;font-size:12.5px;color:var(--ink-soft)}
+  .ev .desc{font-family:var(--body);font-size:14.5px;line-height:1.42;color:var(--ink-soft);margin:0}
+  .ev .meta{font-family:var(--data);font-size:10.5px;letter-spacing:.07em;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:3px 14px}
+  .ev .status{display:flex;gap:3px;margin-top:auto;padding-top:6px}
+  .ev .status button{flex:1;border:1px solid var(--rule);background:transparent;padding:4px 2px;
+    font-family:var(--data);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+  .ev .status button[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:#fff}
+
+  /* ── calendar ─────────────────────────────── */
+  .cal-wrap{background:var(--card);border:1px solid var(--rule-soft);padding:14px clamp(12px,2.4vw,20px) 16px}
+  .cal-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+  .cal-bar .spacer{flex:1}
+  .cal-bar .range{font-family:var(--display);font-weight:700;font-size:15px}
+  .nav{border:1px solid var(--rule);background:transparent;width:28px;height:26px;
+    font-family:var(--data);font-size:13px;padding:0}
+  .cal{display:grid;gap:2px}
+  .cal .dow{font-family:var(--data);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);text-align:center;padding-bottom:2px}
+  .cd{position:relative;background:var(--paper-2);border:none;padding:0;min-height:12px;
+    border-radius:2px;text-align:left;color:inherit}
+  .cd[data-out="1"]{opacity:.32}
+  .cd .n{font-family:var(--data);font-size:10.5px;color:var(--ink-soft);padding:3px 0 0 4px;display:block}
+  .cd .marks{display:flex;gap:2px;padding:2px 0 4px 4px;flex-wrap:wrap}
+  .cd .m{width:5px;height:5px;border-radius:50%;background:var(--deep)}
+  .cd .m.pg{background:#8a6db1}
+  .cd .m.tr{background:var(--moss)}
+  .cd .m.ms{background:var(--live);width:6px;height:6px}
+  .cd.today{box-shadow:inset 0 0 0 1.5px var(--live)}
+  .cd.has1{background:#dbe0e8}.cd.has2{background:#c3ccdb}
+  .cd.has3{background:#9daac2}.cd.has4{background:#6f80a3}
+  .cal.year .cd,.cal.quarter .cd{min-height:0;aspect-ratio:1}
+  .cal.year{grid-template-columns:repeat(7,1fr);gap:3px}
+  .cal.quarter{grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal.month{grid-template-columns:repeat(7,1fr);gap:3px}
+  .cal.month .cd{min-height:62px}
+  .cal.week{grid-template-columns:repeat(7,1fr);gap:3px}
+  .cal.week .cd{min-height:132px}
+  .cal.week .plan2{font-family:var(--display);font-weight:700;font-size:12px;line-height:1.2;
+    padding:2px 5px 0;color:var(--ink)}
+  .cal.week .ml{font-family:var(--data);font-size:9.5px;color:var(--live);padding:3px 5px 0;line-height:1.25}
+  .cal-key{display:flex;flex-wrap:wrap;gap:5px 16px;margin-top:11px;font-family:var(--data);
+    font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);align-items:center}
+  .cal-key i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle}
+  .ms-add{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;border-top:1px solid var(--rule-soft);padding-top:12px}
+  .ms-add input{border-bottom:1px solid var(--rule);padding:4px 2px;font-size:15px;flex:1 1 180px}
+  .ms-add input[type=date]{flex:0 0 auto;font-family:var(--data);font-size:13px}
+
+  /* ── milestones ───────────────────────────── */
+  .badges{display:grid;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);
+    grid-template-columns:repeat(auto-fill,minmax(196px,1fr))}
+  .bg{background:var(--card);padding:13px 14px 14px;display:flex;flex-direction:column;gap:3px;min-height:96px}
+  .bg.locked{background:#eceee7;color:var(--muted)}
+  .bg.near{background:#fff;box-shadow:inset 0 -3px 0 var(--live)}
+  .bg .t{font-family:var(--display);font-weight:700;font-size:15.5px;line-height:1.2;color:var(--ink)}
+  .bg.locked .t{color:#8b8f86}
+  .bg .c{font-family:var(--display);font-weight:500;font-size:12px;color:var(--muted)}
+  .bg .g{font-family:var(--body);font-size:13.5px;line-height:1.35;color:var(--muted);margin-top:auto}
+  .bg .won{font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--moss);margin-top:auto}
+  .bg .prog{height:3px;background:var(--paper-2);margin-top:7px;position:relative}
+  .bg .prog i{position:absolute;inset:0 auto 0 0;background:var(--live)}
+  .dated{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .dated .pill{border:1px solid var(--rule);padding:6px 11px;font-family:var(--data);font-size:11.5px;
+    display:flex;gap:9px;align-items:center}
+  .dated .pill b{font-family:var(--display);font-size:13px;font-weight:700}
+  .dated .pill.soon{border-color:var(--live);color:var(--live)}
+
+  /* ── data vault ───────────────────────────── */
+  .vault{background:var(--card);border:1px solid var(--rule-soft);padding:18px clamp(16px,3vw,24px) 20px}
+  .foot-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
+    background:var(--rule-soft);border:1px solid var(--rule-soft);margin-bottom:16px}
+  .foot-stats div{background:var(--card);padding:11px 12px 12px}
+  .foot-stats span{display:block;font-family:var(--data);font-size:9.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted)}
+  .foot-stats b{display:block;font-family:var(--data);font-size:24px;font-weight:500;margin-top:4px;line-height:1}
+  .foot-stats b em{font-style:normal;font-size:12px;color:var(--muted);margin-left:3px}
+  .vault-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+  .vault .note2{font-family:var(--body);font-size:15px;line-height:1.5;color:var(--ink-soft);
+    max-width:64ch;margin:0 0 14px}
+  #importBox{width:100%;min-height:0;height:34px;border:1px solid var(--rule);padding:7px 9px;
+    font-family:var(--data);font-size:11.5px;background:#fff;resize:vertical}
+  .stale{font-family:var(--data);font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+  .stale.warn{color:var(--live)}
+
+  /* ── generic section ──────────────────────── */
+  section{margin-top:calc(var(--gap) + 14px)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--ink);padding-bottom:7px;margin-bottom:16px}
+  .sec-head h2{font-size:17px;margin:0;letter-spacing:.02em}
+  .sec-head .cn{font-family:var(--display);font-weight:500;color:var(--muted);font-size:14px}
+  .sec-head .right{margin-left:auto;font-family:var(--data);font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted)}
+
+  /* ── the split lane (signature) ───────────── */
+  .lane-wrap{background:var(--card);border:1px solid var(--rule-soft);padding:18px clamp(14px,2.6vw,24px) 14px}
+  .lane{position:relative;height:74px;margin-top:6px}
+  .lane .staff{position:absolute;left:0;right:0;top:38px;height:1px;background:var(--rule)}
+  .lane .hour{position:absolute;top:26px;width:1px;height:24px;background:var(--rule-soft)}
+  .lane .hour b{position:absolute;top:26px;left:-9px;font-family:var(--data);font-size:9.5px;
+    color:var(--muted);font-weight:400}
+  .lane .band{position:absolute;top:26px;height:24px;background:#dfe2ea}
+  .tick{position:absolute;top:14px;width:3px;height:24px;background:var(--deep);border-radius:1px}
+  .tick.partly{height:16px;top:22px;background:#8d93a6}
+  .tick.miss{height:9px;top:29px;background:var(--rule)}
+  .tick.now{background:var(--live);height:30px;top:11px;width:2px}
+  .lane-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--data);font-size:10.5px;
+    letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+
+  .cycle{margin-top:16px;border-top:1px dashed var(--rule);padding-top:16px}
+  .cycle-idle{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+  .btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+    padding:10px 20px;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.01em}
+  .btn:hover{background:var(--deep);border-color:var(--deep)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--paper-2);color:var(--ink)}
+  .btn.live{background:var(--live);border-color:var(--live);color:#fff}
+  .btn.sm{padding:6px 13px;font-size:12.5px}
+  .field{display:block;margin:12px 0}
+  .field label{display:block;font-family:var(--data);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .field input,.field textarea,.field select{
+    width:100%;border-bottom:1px solid var(--rule);padding:6px 2px;font-family:var(--body);font-size:17px}
+  .field textarea{resize:vertical;min-height:56px;line-height:1.45}
+  .grid2{display:grid;gap:0 26px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .timer{display:flex;flex-wrap:wrap;align-items:center;gap:8px 26px}
+  .clock{font-family:var(--data);font-size:clamp(48px,11vw,84px);font-weight:500;line-height:.9;letter-spacing:-.02em}
+  .clock.running{color:var(--live)}
+  .clock.paused{color:var(--muted)}
+  .target-echo{flex:1 1 220px;font-family:var(--body);font-size:18px;line-height:1.35}
+  .target-echo small{display:block;font-family:var(--data);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--live);
+    margin-right:8px;vertical-align:middle;animation:beat 2s ease-in-out infinite}
+  @keyframes beat{0%,100%{opacity:1}50%{opacity:.25}}
+  @media (prefers-reduced-motion:reduce){.pulse{animation:none}*{transition:none!important}}
+  .praise{margin-top:14px;border-left:3px solid var(--live);padding:10px 0 10px 14px;
+    font-family:var(--body);font-size:19px;font-style:italic;line-height:1.35}
+  .praise small{display:block;font-style:normal;font-family:var(--data);font-size:10.5px;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+
+  /* ── pillars ──────────────────────────────── */
+  .pillars{display:grid;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);
+    grid-template-columns:repeat(auto-fit,minmax(238px,1fr))}
+  .pillar{background:var(--card);padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px}
+  .pillar .num{font-family:var(--data);font-size:11px;color:var(--muted);letter-spacing:.2em}
+  .pillar h3{margin:0;font-size:20px;line-height:1.1}
+  .pillar .cn{font-family:var(--display);font-weight:500;font-size:13px;color:var(--ink-soft);line-height:1.4}
+  .pillar .meter{height:4px;background:var(--paper-2);position:relative;margin-top:2px}
+  .pillar .meter i{position:absolute;inset:0 auto 0 0;background:var(--deep)}
+  .pillar .stat{font-family:var(--data);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  ul.todos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+  ul.todos li{display:flex;gap:9px;align-items:flex-start;padding:4px 0;border-bottom:1px solid transparent}
+  ul.todos li:hover{border-bottom-color:var(--rule-soft)}
+  .box{flex:0 0 auto;width:15px;height:15px;margin-top:4px;border:1.5px solid var(--ink);
+    background:transparent;padding:0;border-radius:2px}
+  .box[aria-pressed="true"]{background:var(--moss);border-color:var(--moss)}
+  .todo-text{flex:1;font-size:16.5px;line-height:1.35;word-break:break-word}
+  li.done .todo-text{color:var(--muted);text-decoration:line-through}
+  .kill{opacity:0;border:none;background:none;color:var(--muted);font-family:var(--data);font-size:14px;padding:0 2px}
+  li:hover .kill,.kill:focus{opacity:1}
+  .add{display:flex;gap:8px;align-items:center;border-top:1px solid var(--rule-soft);padding-top:8px;margin-top:auto}
+  .add input{flex:1;font-size:15.5px;font-family:var(--body)}
+  .add input::placeholder{color:var(--muted)}
+  .add button{border:1px solid var(--rule);background:transparent;padding:2px 9px;font-family:var(--data);font-size:13px}
+
+  /* ── daily spine ──────────────────────────── */
+  .spine{display:grid;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .cell{background:var(--card);padding:13px 14px 14px;text-align:left}
+  .cell .k{font-family:var(--data);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+  .cell .v{font-family:var(--display);font-weight:700;font-size:16px;margin-top:6px;line-height:1.25}
+  .cell .v em{font-style:normal;font-family:var(--data);font-weight:400;font-size:13px;color:var(--muted);display:block;margin-top:3px}
+  button.cell{width:100%;border:none;transition:background .12s}
+  button.cell[aria-pressed="true"]{background:#e9eee6}
+  button.cell[aria-pressed="true"] .v{color:var(--moss)}
+  button.cell[aria-pressed="true"] .v::after{content:" ✓"}
+  .water{display:flex;gap:4px;margin-top:8px}
+  .water button{width:100%;height:22px;border:1px solid var(--rule);background:transparent;padding:0}
+  .water button[aria-pressed="true"]{background:var(--deep);border-color:var(--deep)}
+
+  /* ── week ─────────────────────────────────── */
+  .week{display:grid;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);
+    grid-template-columns:repeat(7,minmax(0,1fr))}
+  @media(max-width:660px){.week{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .day{background:var(--card);padding:12px 11px 13px;min-height:112px;display:flex;flex-direction:column;gap:7px;text-align:left;border:none}
+  .day .dow{font-family:var(--data);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .day .plan{font-family:var(--display);font-weight:700;font-size:14.5px;line-height:1.2}
+  .day .tag{font-family:var(--data);font-size:10px;color:var(--muted);margin-top:auto;letter-spacing:.06em}
+  .day.today{background:#fff}
+  .day.today .dow{color:var(--live)}
+  .day[aria-pressed="true"] .plan{color:var(--moss)}
+  .day[aria-pressed="true"] .plan::after{content:" ✓"}
+
+  /* ── indicators + weight ──────────────────── */
+  .two-col{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .panel{background:var(--card);border:1px solid var(--rule-soft);padding:16px 18px 18px}
+  .panel h3{margin:0 0 4px;font-size:16px}
+  .panel .note{font-size:14.5px;color:var(--ink-soft);line-height:1.45;margin:0 0 14px}
+  .lead{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule-soft)}
+  .lead:last-child{border-bottom:none}
+  .lead .lbl{flex:1;font-size:16px;line-height:1.25}
+  .lead .lbl em{font-style:normal;display:block;font-family:var(--data);font-size:10.5px;color:var(--muted);letter-spacing:.08em;margin-top:2px}
+  .stepper{display:flex;align-items:center;gap:2px}
+  .stepper button{width:26px;height:26px;border:1px solid var(--rule);background:transparent;
+    font-family:var(--data);font-size:14px;line-height:1;padding:0}
+  .stepper b{font-family:var(--data);font-size:19px;font-weight:500;min-width:34px;text-align:center}
+  .wchart{height:92px;position:relative;margin:6px 0 10px;border-bottom:1px solid var(--rule)}
+  .wchart .goal{position:absolute;left:0;right:0;border-top:1px dashed var(--live)}
+  .wchart .goal b{position:absolute;right:0;top:-15px;font-family:var(--data);font-size:10px;color:var(--live)}
+  .wchart .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--deep);transform:translate(-50%,-50%)}
+  .wchart .seg{position:absolute;height:1.5px;background:var(--deep);transform-origin:0 50%}
+
+  /* ── story ────────────────────────────────── */
+  .story{background:var(--card);border:1px solid var(--rule-soft);padding:20px clamp(16px,3vw,28px) 22px}
+  .story .lede{font-family:var(--body);font-size:19px;line-height:1.5;max-width:62ch;margin:0 0 16px;color:var(--ink-soft)}
+  .story .field textarea{font-size:18px;line-height:1.5}
+  .saved{font-family:var(--data);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--moss)}
+  .archive{margin-top:18px;border-top:1px solid var(--rule-soft);padding-top:14px}
+  .archive details{margin-bottom:8px}
+  .archive summary{font-family:var(--data);font-size:12px;letter-spacing:.08em;color:var(--muted);cursor:pointer}
+  .archive p{margin:8px 0 0;font-size:16px;line-height:1.5;max-width:66ch}
+  footer{margin-top:44px;border-top:1px solid var(--rule);padding-top:12px;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:8px 20px}
+  .err{color:var(--live);text-transform:none;letter-spacing:0;font-family:var(--body)}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="mast-row">
+      <h1 class="season-title"><span>Season 01 · 半年</span>Four bets,<br>one body,<br>fifteen minutes<br>at a time.</h1>
+      <div class="countdown">
+        <b id="daysLeft">—</b>
+        <small>days left in the season</small>
+        <div class="season-bar"><i id="seasonBar" style="width:0%"></i></div>
+      </div>
+    </div>
+    <div class="mast-sub">
+      <span id="todayLabel">—</span>
+      <span>sleep 23:00 → 07:00</span>
+      <span>train 07:15 → 08:30</span>
+      <span id="weekLabel">—</span>
+    </div>
+  </header>
+
+  <!-- ── CALENDAR ───────────────────────────── -->
+  <section style="margin-top:var(--gap)">
+    <div class="sec-head">
+      <h2>The season, laid out</h2>
+      <span class="cn">年 · 季 · 月 · 周</span>
+      <span class="right" id="calStat">—</span>
+    </div>
+    <div class="cal-wrap">
+      <div class="cal-bar">
+        <button class="chip" data-cv="year">year</button>
+        <button class="chip" data-cv="quarter">quarter</button>
+        <button class="chip" data-cv="month">month</button>
+        <button class="chip" data-cv="week">week</button>
+        <span class="spacer"></span>
+        <button class="nav" id="calPrev" aria-label="Previous">‹</button>
+        <span class="range" id="calRange">—</span>
+        <button class="nav" id="calNext" aria-label="Next">›</button>
+        <button class="chip" id="calToday">today</button>
+      </div>
+      <div class="cal" id="cal"></div>
+      <div class="cal-key">
+        <span><i style="background:#8a6db1"></i>pages</span>
+        <span><i style="background:var(--moss)"></i>trained</span>
+        <span><i style="background:var(--deep)"></i>focus cycles</span>
+        <span><i style="background:var(--live)"></i>milestone</span>
+        <span style="margin-left:auto">darker = deeper day</span>
+      </div>
+      <div class="ms-add">
+        <input id="ms_title" placeholder="milestone — 第一场 salon, move to the Bay, first published interview…"
+          aria-label="Milestone title">
+        <input id="ms_date" type="date" aria-label="Milestone date">
+        <button class="btn sm" id="addMs">Pin it</button>
+      </div>
+      <div class="dated" id="datedList"></div>
+    </div>
+  </section>
+
+  <!-- ── MILESTONES ─────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Things you can win</h2>
+      <span class="cn">解锁式里程碑</span>
+      <span class="right" id="badgeStat">—</span>
+    </div>
+    <div class="badges" id="badges"></div>
+  </section>
+
+  <!-- ── MORNING PAGES ──────────────────────── -->
+  <section style="margin-top:var(--gap)">
+    <div class="sec-head">
+      <h2>Morning pages</h2>
+      <span class="cn">先写，再想</span>
+      <span class="right" id="pagesStat">—</span>
+    </div>
+    <div class="pages">
+      <div class="rule">
+        <span>before the phone</span><span>no editing</span><span>no audience</span>
+        <span>750 words ≈ 3 pages</span>
+      </div>
+      <textarea id="pageText" spellcheck="false"
+        placeholder="Whatever is loudest right now. It doesn't have to be good — it has to be today's."></textarea>
+      <div class="pages-foot">
+        <span class="wc"><b id="wordCount">0</b> words</span>
+        <span class="wordbar"><i id="wordBar" style="width:0%"></i></span>
+        <button class="btn sm ghost" id="mineTopic">There's a 选题 in here →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SPLIT LANE ─────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Today's splits</h2>
+      <span class="cn">十五分钟一格</span>
+      <span class="right" id="splitStat">—</span>
+    </div>
+    <div class="lane-wrap">
+      <div class="lane" id="lane"></div>
+      <div class="lane-legend">
+        <span>▮ full hit</span><span>▮ partial</span><span>▮ missed</span>
+        <span style="color:var(--live)">▮ now</span>
+      </div>
+
+      <div class="cycle" id="cycle"></div>
+    </div>
+  </section>
+
+  <!-- ── PILLARS ────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>The four bets</h2>
+      <span class="cn">半年只押这四件事</span>
+      <span class="right" id="pillarStat">—</span>
+    </div>
+    <div class="pillars" id="pillars"></div>
+  </section>
+
+  <!-- ── DAILY SPINE ────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Daily spine</h2>
+      <span class="cn">每天都要发生的事</span>
+      <span class="right" id="spineStat">—</span>
+    </div>
+    <div class="spine" id="spine"></div>
+  </section>
+
+  <!-- ── TRAINING WEEK ──────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Training week</h2>
+      <span class="cn">一周三练 + 跳舞</span>
+      <span class="right">tap a day when it's done</span>
+    </div>
+    <div class="week" id="week"></div>
+  </section>
+
+  <!-- ── CRM ────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>The people file</h2>
+      <span class="cn">弱关系 × 亲密关系 · cadence</span>
+      <span class="right" id="crmStat">—</span>
+    </div>
+    <div class="crm">
+      <div class="crm-head" id="crmFilters"></div>
+      <div id="people"></div>
+      <div class="crm-add">
+        <input id="p_name" placeholder="name" aria-label="Name">
+        <input id="p_how" placeholder="who they are / where you met" aria-label="Context">
+        <select id="p_tier" aria-label="Tier">
+          <option value="inner">亲密 inner</option>
+          <option value="weak" selected>弱关系 weak tie</option>
+          <option value="want">想认识 want to meet</option>
+        </select>
+        <select id="p_cad" aria-label="Cadence">
+          <option value="14">every 2 weeks</option>
+          <option value="30" selected>monthly</option>
+          <option value="90">quarterly</option>
+          <option value="180">twice a year</option>
+        </select>
+        <button class="btn sm" id="addPerson">Add</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EVENT LAB ──────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Rooms I could host</h2>
+      <span class="cn">形式先定，cadence 再定，最后才找人</span>
+      <span class="right" id="evStat">—</span>
+    </div>
+    <div class="events" id="events"></div>
+  </section>
+
+  <!-- ── INDICATORS + BODY ──────────────────── -->
+  <section>
+    <div class="two-col">
+      <div class="panel">
+        <h3>Leading indicators</h3>
+        <p class="note">Not vanity numbers — these are the inputs that decide whether the four bets
+          compound. Distribution is a leading indicator: reach built now is what makes the interviews,
+          the events and the invitations possible later.</p>
+        <div id="leads"></div>
+      </div>
+      <div class="panel">
+        <h3>The tape, not the scale</h3>
+        <p class="note">For a swimwear-model line the variable is <b>ratio</b>, not mass — shoulder
+          against waist, waist against hip. Muscle you're adding to 肩/背/臀 will hide on the scale
+          and show on the tape. Measure once a week, same morning, before food.</p>
+        <div id="tape"></div>
+        <div class="ratios" id="ratios"></div>
+        <div class="wchart" id="wchart"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PHYSIQUE PROGRAM ───────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>The physique program</h2>
+      <span class="cn">肩 · 背 · 臀 撑起来，腰留窄</span>
+      <span class="right" id="programStat">—</span>
+    </div>
+    <div class="program" id="program"></div>
+    <div class="two-col" style="margin-top:var(--gap)">
+      <div class="panel">
+        <h3>Waist-safe core <span class="cnq">腰不能练粗</span></h3>
+        <p class="note">Anti-movement and bracing, not loaded side bends or heavy weighted twists —
+          those build obliques outward and thicken the line you're trying to keep narrow.
+          Daily, 8 minutes, after training.</p>
+        <div id="coreList"></div>
+      </div>
+      <div class="panel">
+        <h3>体态 · posture block</h3>
+        <p class="note">The fastest-moving lever you have. Desk hours and running both pull you into
+          rounded shoulders and a tucked-under rib cage; a model line is thoracic extension, stacked
+          ribs over pelvis, shoulders back and down. 10 minutes, most days.</p>
+        <div id="postureList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STORY ──────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Sunday story</h2>
+      <span class="cn">这周是一个什么样的故事</span>
+      <span class="right" id="storyStat">—</span>
+    </div>
+    <div class="story">
+      <p class="lede">A week isn't a score, it's a scene. Write it as one — an opening, a turn,
+        and the thing you now know that you didn't on Monday. Ten quiet minutes, no phone.</p>
+      <div class="grid2">
+        <div class="field"><label>开场 · where the week opened</label>
+          <textarea id="s_open" placeholder="Monday, I was…"></textarea></div>
+        <div class="field"><label>转折 · the turn</label>
+          <textarea id="s_turn" placeholder="Then…"></textarea></div>
+      </div>
+      <div class="field"><label>我学到的 · what I now know</label>
+        <textarea id="s_learn" placeholder="I know now that…"></textarea></div>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <button class="btn sm" id="saveStory">Save this week</button>
+        <span class="saved" id="storySaved"></span>
+      </div>
+      <div class="archive" id="archive"></div>
+    </div>
+  </section>
+
+  <!-- ── DATA VAULT ─────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Your data</h2>
+      <span class="cn">全部存档</span>
+      <span class="right" id="vaultStat">—</span>
+    </div>
+    <div class="vault">
+      <div class="foot-stats" id="footStats"></div>
+      <p class="note2">Everything is kept, not summarised — every cycle with its target and result,
+        every morning's full text, every touch with every person, every weigh-in. Pages are stored
+        one file per month so a long season never hits a size ceiling. Nothing is ever overwritten
+        by a rollup.</p>
+      <div class="vault-row">
+        <button class="btn sm" id="exportJson">Download everything (.json)</button>
+        <button class="btn sm ghost" id="exportMd">Pages as Markdown</button>
+        <button class="btn sm ghost" id="copyJson">Copy to clipboard</button>
+        <span class="stale" id="lastExport"></span>
+      </div>
+      <div class="vault-row" style="margin-bottom:6px">
+        <input type="file" id="importFile" accept=".json,application/json" aria-label="Restore from file">
+        <span style="font-family:var(--data);font-size:11px;color:var(--muted)">or paste a backup ↓</span>
+      </div>
+      <textarea id="importBox" placeholder='{"start":"…","todos":[…]}' spellcheck="false"></textarea>
+      <div class="vault-row" style="margin-top:10px">
+        <button class="btn sm ghost" id="importJson">Restore from paste</button>
+        <span id="importMsg" class="stale"></span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>半年 · Season OS</span>
+    <span id="saveState">saved</span>
+    <span id="storeWarn" class="err"></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ── storage ─────────────────────────────── */
+  var KEY = "season-os:v1";
+  var PAGE_KEY = "season-os:pages:";
+  var state = null, mem = {}, saveTimer = null, dirtyMonths = {};
+
+  function coreOf(){
+    var c = {}; for(var k in state) if(k !== "pages") c[k] = state[k];
+    return c;
+  }
+  function pagesForMonth(m){
+    var out = {};
+    Object.keys(state.pages||{}).forEach(function(k){ if(k.slice(0,7) === m) out[k] = state.pages[k]; });
+    return out;
+  }
+  function touchMonth(k){ dirtyMonths[k.slice(0,7)] = true; }
+
+  var PILLARS = [
+    { id:"ip",   name:"Personal IP",
+      cn:"专业能力 · 靠谱 · be the connector",
+      seed:["定这个月的选题","录 30 分钟口播","Ship one piece publicly","列出 10 个最想采访的人"] },
+    { id:"net",  name:"Network",
+      cn:"弱关系 × 亲密关系 · source · cadence · 办活动",
+      seed:["决定活动的形式和 cadence","形式定了再找人 — 起名单","这周约 3 场一对一","Book the first event date"] },
+    { id:"build",name:"Builder",
+      cn:"know the tools · eval 得动手 · 说得清 use case 和 nuance",
+      seed:["选 2 个工具深度 eval","写一篇 use-case teardown","Ship 一个小东西"] },
+    { id:"body", name:"Body & presence",
+      cn:"体态 · 体脂 · 肌肉 — 臀/腹/肩/背",
+      seed:["周日排下周的训练时间","约一次体态评估"] }
+  ];
+
+  var SPINE = [
+    { id:"sleep",  k:"23:00 → 07:00", v:"Sleep window",  cn:"定时睡定时起" },
+    { id:"train",  k:"07:15 → 08:30", v:"Training",      cn:"早上练完就自由了" },
+    { id:"core",   k:"every day",     v:"Core",          cn:"核心" },
+    { id:"stretch",k:"after training",v:"Stretch",       cn:"训练后拉伸" },
+    { id:"speak",  k:"30 min",        v:"口播",           cn:"自己说话 · 录下来" }
+  ];
+
+  var WEEK = [
+    { dow:"Mon", plan:"下肢 A + 攀岩",     tag:"glute-dominant · climb" },
+    { dow:"Tue", plan:"跳舞",             tag:"dance" },
+    { dow:"Wed", plan:"上肢 + VO₂max",    tag:"lift first, then run" },
+    { dow:"Thu", plan:"跳舞",             tag:"dance" },
+    { dow:"Fri", plan:"下肢 B + 攀岩",     tag:"quad · unilateral · climb" },
+    { dow:"Sat", plan:"Zone 2 长距离",    tag:"long, easy, talkable" },
+    { dow:"Sun", plan:"量围度 + 故事",     tag:"tape · photo · reflect" }
+  ];
+
+  var PROGRAM = [
+    { id:"lowerA", dow:1, when:"Monday · 07:15", name:"下肢 A — 臀主导",
+      aim:"Hip hinge. This is the session that builds the shape everything else hangs off.",
+      ex:[
+        { id:"a1", nm:"Barbell hip thrust", cn:"臀推", rx:"4 × 8–10",
+          why:"The single highest-return lift for glute size. Pause and squeeze at the top." },
+        { id:"a2", nm:"Romanian deadlift", cn:"罗马尼亚硬拉", rx:"3 × 10",
+          why:"Glute–hamstring tie-in. Push hips back, don't squat it." },
+        { id:"a3", nm:"Bulgarian split squat", cn:"保加利亚分腿蹲", rx:"3 × 10 / leg",
+          why:"Fixes side-to-side asymmetry — the thing that shows in photos." },
+        { id:"a4", nm:"Hip abduction", cn:"髋外展 / 蚌式", rx:"3 × 20",
+          why:"Glute medius. This is the upper-side shelf that makes the hip look round, not flat." },
+        { id:"a5", nm:"45° back extension", cn:"山羊挺身", rx:"3 × 12",
+          why:"Rounded upper back, glute-driven — posterior chain without loading the spine." },
+        { id:"a6", nm:"Climbing", cn:"攀岩", rx:"45–60 min",
+          why:"Doubles as lat and grip work. Counts toward the taper." }
+      ]},
+    { id:"upper", dow:3, when:"Wednesday · 07:15", name:"上肢 — 倒三角",
+      aim:"Shoulders wide, back wide, waist untouched. Lift first, run the VO₂max intervals after.",
+      ex:[
+        { id:"u1", nm:"Lat pulldown, wide grip", cn:"宽握下拉", rx:"4 × 8–10",
+          why:"Lat width is half the V. Wide grip, pull to collarbone, lead with elbows." },
+        { id:"u2", nm:"Lateral raise", cn:"侧平举", rx:"4 × 15",
+          why:"Side delts are the other half — and the fastest visual change you can make. Light, strict, high reps." },
+        { id:"u3", nm:"Seated cable row", cn:"坐姿划船", rx:"3 × 10",
+          why:"Mid-back thickness and the posture you want standing still." },
+        { id:"u4", nm:"Face pull / rear delt fly", cn:"面拉 · 后束", rx:"3 × 15",
+          why:"Pulls the shoulders back and open. Pure 体态 work." },
+        { id:"u5", nm:"Incline dumbbell press", cn:"上斜卧推", rx:"3 × 10",
+          why:"Upper chest — keeps the shoulder line from looking hollow at the front." },
+        { id:"u6", nm:"Triceps rope + curls", cn:"三头绳索 + 弯举", rx:"2 × 12 each",
+          why:"Arms photograph. Cheap to add at the end." }
+      ]},
+    { id:"lowerB", dow:5, when:"Friday · 07:15", name:"下肢 B — 腿 + 单侧",
+      aim:"Knee-dominant and unilateral. Legs get their own day so Monday stays glute-first.",
+      ex:[
+        { id:"b1", nm:"Back squat or hack squat", cn:"深蹲", rx:"4 × 8",
+          why:"Depth over load. Full range is what builds the glute, not the number on the bar." },
+        { id:"b2", nm:"Walking lunge", cn:"行走箭步蹲", rx:"3 × 12 / leg",
+          why:"Long stride, torso tall. Glute and quad, plus balance under fatigue." },
+        { id:"b3", nm:"Single-leg RDL", cn:"单腿硬拉", rx:"3 × 10 / leg",
+          why:"Hip stability. This is what makes standing and walking look controlled." },
+        { id:"b4", nm:"Cable kickback", cn:"绳索后踢", rx:"3 × 15 / leg",
+          why:"Isolates the glute at end range where the squat leaves off." },
+        { id:"b5", nm:"Standing calf raise", cn:"提踵", rx:"3 × 15",
+          why:"Calves finish the leg line in swimwear and heels. Rarely trained, always visible." },
+        { id:"b6", nm:"Climbing", cn:"攀岩", rx:"45–60 min", why:"Same as Monday." }
+      ]}
+  ];
+
+  var CORE = [
+    { id:"c1", nm:"Hollow body hold", cn:"空心支撑", rx:"3 × 30 s" },
+    { id:"c2", nm:"Dead bug", cn:"死虫", rx:"3 × 10 / side" },
+    { id:"c3", nm:"Pallof press", cn:"帕洛夫推", rx:"3 × 12 / side" },
+    { id:"c4", nm:"Hanging knee / leg raise", cn:"悬垂举腿", rx:"3 × 10" },
+    { id:"c5", nm:"Stomach vacuum", cn:"腹式真空", rx:"5 × 15 s" }
+  ];
+
+  var POSTURE = [
+    { id:"p1", nm:"Thoracic extension over foam roller", cn:"胸椎伸展", rx:"2 min" },
+    { id:"p2", nm:"Wall slides", cn:"靠墙滑肩", rx:"2 × 12" },
+    { id:"p3", nm:"Couch stretch (hip flexor)", cn:"髂腰肌拉伸", rx:"90 s / side" },
+    { id:"p4", nm:"Chin tuck + wall stand", cn:"收下巴靠墙站", rx:"2 min" },
+    { id:"p5", nm:"90/90 hip switch", cn:"90/90 转髋", rx:"2 min" }
+  ];
+
+  var TAPE = [
+    { id:"shoulder", k:"Shoulder", cn:"肩围 · 最宽处" },
+    { id:"waist",    k:"Waist",    cn:"腰围 · 肚脐" },
+    { id:"hip",      k:"Hip",      cn:"臀围 · 最宽处" },
+    { id:"thigh",    k:"Thigh",    cn:"大腿 · 上 1/3" },
+    { id:"weight",   k:"Weight",   cn:"体重 kg" }
+  ];
+
+  var LEADS = [
+    { id:"met",     lbl:"People met in person",   sub:"见面 · not messages" },
+    { id:"sourced", lbl:"New people sourced",     sub:"弱关系 · 主动 reach out" },
+    { id:"shipped", lbl:"Pieces published",       sub:"distribution — the leading one" },
+    { id:"asked",   lbl:"Interview asks sent",    sub:"只采访最好最顶尖的" }
+  ];
+
+  var PRAISE = {
+    hit:[
+      "That's a real one. 十五分钟，说到做到.",
+      "Kept the promise to yourself. That's the whole skill.",
+      "Clean split. This is what 靠谱 looks like from the inside.",
+      "You said what you'd do and then did it. Again.",
+      "Momentum banked. 别停，下一格.",
+      "That block is yours forever now. Nobody can take it back."
+    ],
+    partly:[
+      "Partial still counts — you moved the thing that wasn't moving.",
+      "Started is the hard part, and you started. 继续.",
+      "Not the whole target, but the ball is downfield.",
+      "Good. Progress over perfection — that was always the deal."
+    ],
+    miss:[
+      "You showed up and named it honestly. That's data, not failure.",
+      "One rough block doesn't set the tone. The next one does.",
+      "Noticing where it went is already the fix. 下一格重新来.",
+      "Fifteen minutes lost, six months intact."
+    ]
+  };
+
+  function todayKey(d){ d = d || new Date();
+    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function pad(n){ return (n<10?"0":"")+n; }
+  function mondayOf(d){ var x=new Date(d); var wd=(x.getDay()+6)%7; x.setDate(x.getDate()-wd);
+    x.setHours(0,0,0,0); return x; }
+  function weekKey(d){ return todayKey(mondayOf(d||new Date())); }
+
+  function blank(){
+    return { start: todayKey(), todos: [], days:{}, weeks:{}, seeded:false };
+  }
+  function day(k){ k = k || todayKey();
+    if(!state.days[k]) state.days[k] = { habits:{}, water:0, cycles:[], train:false };
+    return state.days[k]; }
+  function week(k){ k = k || weekKey();
+    if(!state.weeks[k]) state.weeks[k] = { story:{open:"",turn:"",learn:""}, leads:{}, weight:null };
+    return state.weeks[k]; }
+
+  function markSaved(t){ var el=document.getElementById("saveState"); if(el) el.textContent=t||"saved"; }
+
+  var booted = false, refreshing = false;
+  function refreshDerived(){
+    if(!booted || refreshing) return;
+    refreshing = true;
+    try { renderBadges(); renderCal(); } catch(e){} finally { refreshing = false; }
+  }
+
+  function save(){
+    markSaved("saving…");
+    refreshDerived();
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){
+      var core = JSON.stringify(coreOf());
+      var months = Object.keys(dirtyMonths);
+      dirtyMonths = {};
+      if(!window.storage){
+        mem[KEY] = core;
+        months.forEach(function(m){ mem[PAGE_KEY+m] = JSON.stringify(pagesForMonth(m)); });
+        markSaved("saved locally"); renderVault(); return;
+      }
+      var jobs = [ window.storage.set(KEY, core) ];
+      months.forEach(function(m){
+        jobs.push(window.storage.set(PAGE_KEY+m, JSON.stringify(pagesForMonth(m))));
+      });
+      Promise.all(jobs).then(function(){ markSaved("saved"); renderVault(); })
+        .catch(function(){
+          mem[KEY] = core;
+          markSaved("saved in memory only — export a backup");
+        });
+    }, 350);
+  }
+
+  function load(){
+    if(!window.storage){
+      document.getElementById("storeWarn").textContent =
+        "Storage unavailable here — download a backup before you close this tab.";
+      return Promise.resolve(null);
+    }
+    var core = null;
+    return window.storage.get(KEY)
+      .then(function(r){ core = r && r.value ? JSON.parse(r.value) : null; })
+      .catch(function(){ core = null; })
+      .then(function(){ return window.storage.list(PAGE_KEY).catch(function(){ return null; }); })
+      .then(function(res){
+        var keys = (res && res.keys) || [];
+        if(!keys.length) return core;
+        return Promise.all(keys.map(function(k){
+          return window.storage.get(k).then(function(r){
+            return r && r.value ? JSON.parse(r.value) : {};
+          }).catch(function(){ return {}; });
+        })).then(function(chunks){
+          core = core || {};
+          core.pages = core.pages || {};
+          chunks.forEach(function(c){ for(var d in c) core.pages[d] = c[d]; });
+          return core;
+        });
+      });
+  }
+
+  /* ── season header ───────────────────────── */
+  var LEN = 183;
+  function renderMast(){
+    var start = new Date(state.start + "T00:00:00");
+    var now = new Date(); now.setHours(0,0,0,0);
+    var gone = Math.max(0, Math.round((now - start)/86400000));
+    var left = Math.max(0, LEN - gone);
+    document.getElementById("daysLeft").textContent = left;
+    document.getElementById("seasonBar").style.width = Math.min(100, gone/LEN*100).toFixed(1)+"%";
+    var end = new Date(start.getTime() + LEN*86400000);
+    var fmt = { month:"short", day:"numeric" };
+    document.getElementById("todayLabel").textContent =
+      new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+    document.getElementById("weekLabel").textContent =
+      "season " + start.toLocaleDateString("en-US",fmt) + " → " + end.toLocaleDateString("en-US",fmt);
+  }
+
+  /* ── split lane ──────────────────────────── */
+  var LANE_START = 7, LANE_END = 23;
+  function posOf(dt){
+    var h = dt.getHours() + dt.getMinutes()/60;
+    return Math.max(0, Math.min(1, (h - LANE_START)/(LANE_END - LANE_START)))*100;
+  }
+  function renderLane(){
+    var lane = document.getElementById("lane"), html = "";
+    for(var h=LANE_START; h<=LANE_END; h+=2){
+      var p = (h-LANE_START)/(LANE_END-LANE_START)*100;
+      html += '<div class="hour" style="left:'+p+'%"><b>'+pad(h)+'</b></div>';
+    }
+    var w0 = (7.25-LANE_START)/(LANE_END-LANE_START)*100;
+    var w1 = (8.5-LANE_START)/(LANE_END-LANE_START)*100;
+    html += '<div class="band" style="left:'+w0+'%;width:'+(w1-w0)+'%"></div>';
+    html += '<div class="staff"></div>';
+    var d = day(), n = 0;
+    d.cycles.forEach(function(c){
+      var cls = c.result === "hit" ? "" : (c.result === "partly" ? "partly" : "miss");
+      if(c.result === "hit") n++;
+      html += '<div class="tick '+cls+'" style="left:'+posOf(new Date(c.end))+'%" title="'+
+              esc(c.target)+'"></div>';
+    });
+    html += '<div class="tick now" style="left:'+posOf(new Date())+'%"></div>';
+    lane.innerHTML = html;
+    var mins = d.cycles.filter(function(c){return c.result!=="miss";}).length*15;
+    document.getElementById("splitStat").textContent =
+      d.cycles.length + " cycles · " + (mins/60).toFixed(2).replace(/\.?0+$/,"") + "h focused";
+  }
+
+  /* ── cycle machine ───────────────────────── */
+  var CYCLE_MIN = 15;
+  var run = null, tick = null, lastPraise = "";
+
+  function renderCycle(){
+    var box = document.getElementById("cycle");
+    if(!run){
+      box.innerHTML =
+        '<div class="cycle-idle">'+
+          '<button class="btn" id="startCycle">Start a 15-minute cycle</button>'+
+          '<span style="font-family:var(--data);font-size:11.5px;letter-spacing:.1em;'+
+          'text-transform:uppercase;color:var(--muted)">one target · one first move · one hazard</span>'+
+        '</div>' + (lastPraise ? '<div class="praise"><small>check-in</small>'+esc(lastPraise)+'</div>' : '');
+      var b = document.getElementById("startCycle");
+      if(b) b.onclick = openPlan;
+      return;
+    }
+    if(run.phase === "plan"){
+      box.innerHTML =
+        '<div class="grid2">'+
+          '<div class="field"><label>What is the one thing this cycle produces?</label>'+
+            '<input id="c_target" placeholder="e.g. 口播 script for 选题 #3 — first draft"></div>'+
+          '<div class="field"><label>Which bet does it serve?</label><select id="c_pillar">'+
+            PILLARS.map(function(p,i){return '<option value="'+p.id+'">'+ (i+1) +' · '+p.name+'</option>';}).join("")+
+            '<option value="none">— something else</option></select></div>'+
+        '</div>'+
+        '<div class="grid2">'+
+          '<div class="field"><label>First move, right now</label>'+
+            '<input id="c_first" placeholder="Open the doc and write the opening line"></div>'+
+          '<div class="field"><label>What could pull me away?</label>'+
+            '<input id="c_hazard" placeholder="WeChat · 想查一个不重要的东西"></div>'+
+        '</div>'+
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">'+
+          '<button class="btn live" id="go">Start the clock</button>'+
+          '<button class="btn ghost sm" id="cancel">Cancel</button></div>';
+      document.getElementById("go").onclick = beginRun;
+      document.getElementById("cancel").onclick = function(){ run=null; renderCycle(); };
+      var t = document.getElementById("c_target"); if(t) t.focus();
+      return;
+    }
+    if(run.phase === "run"){
+      var left = Math.max(0, run.endsAt - Date.now());
+      var m = Math.floor(left/60000), s = Math.floor(left%60000/1000);
+      box.innerHTML =
+        '<div class="timer">'+
+          '<div class="clock '+(run.paused?"paused":"running")+'" id="clock">'+pad(m)+':'+pad(s)+'</div>'+
+          '<div class="target-echo"><small>'+(run.paused?"paused":"<span class=pulse></span>in progress")+'</small>'+
+            esc(run.target)+
+            '<div style="font-family:var(--data);font-size:11.5px;color:var(--muted);margin-top:7px">'+
+              'first move: '+esc(run.first||"—")+'<br>watch out: '+esc(run.hazard||"—")+'</div></div>'+
+          '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+            '<button class="btn ghost sm" id="pause">'+(run.paused?"Resume":"Pause")+'</button>'+
+            '<button class="btn ghost sm" id="done">End now</button></div>'+
+        '</div>';
+      document.getElementById("pause").onclick = function(){
+        if(run.paused){ run.endsAt = Date.now() + run.remain; run.paused = false; }
+        else { run.remain = run.endsAt - Date.now(); run.paused = true; }
+        renderCycle();
+      };
+      document.getElementById("done").onclick = function(){ run.phase = "review"; renderCycle(); };
+      return;
+    }
+    // review
+    box.innerHTML =
+      '<div style="font-family:var(--data);font-size:11px;letter-spacing:.13em;text-transform:uppercase;'+
+        'color:var(--muted);margin-bottom:8px">cycle done · '+esc(run.target)+'</div>'+
+      '<div class="field"><label>Did you get there?</label>'+
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">'+
+          '<button class="btn sm ghost" data-r="hit">Yes — hit it</button>'+
+          '<button class="btn sm ghost" data-r="partly">Partly</button>'+
+          '<button class="btn sm ghost" data-r="miss">No — went sideways</button></div></div>'+
+      '<div class="field"><label>One line — what actually happened?</label>'+
+        '<input id="c_note" placeholder="optional"></div>';
+    Array.prototype.forEach.call(box.querySelectorAll("[data-r]"), function(b){
+      b.onclick = function(){ closeCycle(b.getAttribute("data-r")); };
+    });
+  }
+
+  function openPlan(){ run = { phase:"plan" }; renderCycle(); }
+
+  function beginRun(){
+    var t = (document.getElementById("c_target").value||"").trim();
+    if(!t){ document.getElementById("c_target").focus(); return; }
+    run = {
+      phase:"run", target:t,
+      pillar: document.getElementById("c_pillar").value,
+      first: (document.getElementById("c_first").value||"").trim(),
+      hazard: (document.getElementById("c_hazard").value||"").trim(),
+      startedAt: Date.now(), endsAt: Date.now() + CYCLE_MIN*60000, paused:false, remain:0
+    };
+    lastPraise = "";
+    renderCycle();
+    clearInterval(tick);
+    tick = setInterval(function(){
+      if(!run || run.phase!=="run" || run.paused) return;
+      if(Date.now() >= run.endsAt){ chime(); run.phase = "review"; renderCycle(); return; }
+      var left = run.endsAt - Date.now();
+      var el = document.getElementById("clock");
+      if(el) el.textContent = pad(Math.floor(left/60000))+":"+pad(Math.floor(left%60000/1000));
+    }, 250);
+  }
+
+  function closeCycle(result){
+    clearInterval(tick);
+    var note = (document.getElementById("c_note")||{}).value || "";
+    day().cycles.push({
+      target: run.target, pillar: run.pillar, result: result, note: note.trim(),
+      start: new Date(run.startedAt).toISOString(), end: new Date().toISOString()
+    });
+    var bank = PRAISE[result];
+    lastPraise = bank[Math.floor(Math.random()*bank.length)];
+    run = null;
+    save(); renderLane(); renderCycle(); renderPillars();
+  }
+
+  function chime(){
+    try{
+      var A = window.AudioContext || window.webkitAudioContext; if(!A) return;
+      var ctx = new A();
+      [[523.25,0],[783.99,.14]].forEach(function(n){
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type="sine"; o.frequency.value=n[0];
+        g.gain.setValueAtTime(0.0001, ctx.currentTime+n[1]);
+        g.gain.exponentialRampToValueAtTime(0.14, ctx.currentTime+n[1]+0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+n[1]+1.1);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(ctx.currentTime+n[1]); o.stop(ctx.currentTime+n[1]+1.2);
+      });
+    }catch(e){}
+  }
+
+  /* ── pillars + todos ─────────────────────── */
+  function esc(s){ return String(s==null?"":s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+  function cyclesForPillar(id, since){
+    var n = 0;
+    Object.keys(state.days).forEach(function(k){
+      if(k < since) return;
+      state.days[k].cycles.forEach(function(c){ if(c.pillar===id && c.result!=="miss") n++; });
+    });
+    return n;
+  }
+
+  function renderPillars(){
+    var since = weekKey(), host = document.getElementById("pillars"), html = "";
+    PILLARS.forEach(function(p, i){
+      var mine = state.todos.filter(function(t){ return t.pillar===p.id; });
+      var done = mine.filter(function(t){ return t.done; }).length;
+      var pct = mine.length ? done/mine.length*100 : 0;
+      var hrs = (cyclesForPillar(p.id, since)*15/60);
+      html +=
+        '<div class="pillar">'+
+          '<div class="num">'+pad(i+1)+'</div>'+
+          '<h3>'+esc(p.name)+'</h3>'+
+          '<div class="cn">'+esc(p.cn)+'</div>'+
+          '<div class="meter"><i style="width:'+pct.toFixed(0)+'%"></i></div>'+
+          '<div class="stat">'+done+'/'+mine.length+' done · '+hrs.toFixed(2).replace(/\.?0+$/,"")+'h this week</div>'+
+          '<ul class="todos">'+ mine.map(function(t){
+            return '<li class="'+(t.done?"done":"")+'">'+
+              '<button class="box" aria-pressed="'+(t.done?"true":"false")+'" data-tog="'+t.id+'" '+
+                'aria-label="Mark done"></button>'+
+              '<span class="todo-text">'+esc(t.text)+'</span>'+
+              '<button class="kill" data-del="'+t.id+'" aria-label="Delete">×</button></li>';
+          }).join("") + '</ul>'+
+          '<div class="add"><input data-add="'+p.id+'" placeholder="add to '+esc(p.name)+'…" '+
+            'aria-label="Add a task to '+esc(p.name)+'"><button data-addbtn="'+p.id+'">+</button></div>'+
+        '</div>';
+    });
+    host.innerHTML = html;
+
+    Array.prototype.forEach.call(host.querySelectorAll("[data-tog]"), function(b){
+      b.onclick = function(){
+        var t = find(b.getAttribute("data-tog")); if(!t) return;
+        t.done = !t.done; save(); renderPillars();
+      };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-del]"), function(b){
+      b.onclick = function(){
+        state.todos = state.todos.filter(function(t){ return t.id !== b.getAttribute("data-del"); });
+        save(); renderPillars();
+      };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-add]"), function(inp){
+      inp.onkeydown = function(e){ if(e.key==="Enter") addTodo(inp.getAttribute("data-add"), inp); };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-addbtn]"), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute("data-addbtn");
+        addTodo(id, host.querySelector('[data-add="'+id+'"]'));
+      };
+    });
+
+    var open = state.todos.filter(function(t){ return !t.done; }).length;
+    document.getElementById("pillarStat").textContent = open + " open";
+  }
+  function find(id){ for(var i=0;i<state.todos.length;i++) if(state.todos[i].id===id) return state.todos[i]; }
+  function addTodo(pillar, inp){
+    var v = (inp.value||"").trim(); if(!v) return;
+    state.todos.push({ id: String(Date.now())+Math.random().toString(36).slice(2,6),
+      text:v, pillar:pillar, done:false, created: todayKey() });
+    inp.value = ""; save(); renderPillars();
+    var again = document.querySelector('[data-add="'+pillar+'"]'); if(again) again.focus();
+  }
+
+  /* ── daily spine ─────────────────────────── */
+  function renderSpine(){
+    var d = day(), host = document.getElementById("spine"), html = "";
+    SPINE.forEach(function(s){
+      var on = !!d.habits[s.id];
+      html += '<button class="cell" aria-pressed="'+on+'" data-h="'+s.id+'">'+
+        '<div class="k">'+esc(s.k)+'</div><div class="v">'+esc(s.v)+'<em>'+esc(s.cn)+'</em></div></button>';
+    });
+    html += '<div class="cell"><div class="k">six boxes</div><div class="v">Water<em>喝水六格</em></div>'+
+      '<div class="water">'+[0,1,2,3,4,5].map(function(i){
+        return '<button aria-pressed="'+(d.water>i)+'" data-w="'+(i+1)+'" aria-label="'+(i+1)+' of 6"></button>';
+      }).join("")+'</div></div>';
+    host.innerHTML = html;
+
+    Array.prototype.forEach.call(host.querySelectorAll("[data-h]"), function(b){
+      b.onclick = function(){ var k = b.getAttribute("data-h");
+        d.habits[k] = !d.habits[k]; save(); renderSpine(); };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-w]"), function(b){
+      b.onclick = function(){ var n = +b.getAttribute("data-w");
+        d.water = (d.water === n) ? n-1 : n; save(); renderSpine(); };
+    });
+    document.getElementById("spineStat").textContent = streak() + "-day streak · 3 of 5 counts as a good day";
+  }
+  function streak(){
+    var n = 0, d = new Date();
+    for(var i=0;i<400;i++){
+      var rec = state.days[todayKey(d)];
+      var hit = rec ? Object.keys(rec.habits).filter(function(k){return rec.habits[k];}).length : 0;
+      if(hit >= 3) n++;
+      else if(i > 0) break;
+      d.setDate(d.getDate()-1);
+    }
+    return n;
+  }
+
+  /* ── training week ───────────────────────── */
+  function renderWeek(){
+    var mon = mondayOf(new Date()), host = document.getElementById("week"), html = "";
+    WEEK.forEach(function(w, i){
+      var dt = new Date(mon.getTime() + i*86400000), k = todayKey(dt);
+      var rec = state.days[k];
+      var isToday = k === todayKey();
+      html += '<button class="day'+(isToday?" today":"")+'" aria-pressed="'+(rec&&rec.train?"true":"false")+
+        '" data-d="'+k+'">'+
+        '<div class="dow">'+w.dow+' '+dt.getDate()+'</div>'+
+        '<div class="plan">'+esc(w.plan)+'</div>'+
+        '<div class="tag">'+esc(w.tag)+'</div></button>';
+    });
+    host.innerHTML = html;
+    Array.prototype.forEach.call(host.querySelectorAll("[data-d]"), function(b){
+      b.onclick = function(){ var rec = day(b.getAttribute("data-d"));
+        rec.train = !rec.train; save(); renderWeek(); };
+    });
+  }
+
+  /* ── leading indicators ──────────────────── */
+  function renderLeads(){
+    var w = week(), host = document.getElementById("leads"), html = "";
+    LEADS.forEach(function(l){
+      var n = w.leads[l.id] || 0;
+      html += '<div class="lead"><span class="lbl">'+esc(l.lbl)+'<em>'+esc(l.sub)+'</em></span>'+
+        '<span class="stepper"><button data-m="'+l.id+'" aria-label="minus">–</button>'+
+        '<b>'+n+'</b><button data-p="'+l.id+'" aria-label="plus">+</button></span></div>';
+    });
+    host.innerHTML = html;
+    Array.prototype.forEach.call(host.querySelectorAll("[data-p]"), function(b){
+      b.onclick = function(){ var k=b.getAttribute("data-p");
+        w.leads[k] = (w.leads[k]||0)+1; save(); renderLeads(); };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-m]"), function(b){
+      b.onclick = function(){ var k=b.getAttribute("data-m");
+        w.leads[k] = Math.max(0,(w.leads[k]||0)-1); save(); renderLeads(); };
+    });
+  }
+
+  /* ── physique program ────────────────────── */
+  function lifts(k){ var d = day(k); if(!d.lifts) d.lifts = {}; return d.lifts; }
+
+  function exRow(e, on){
+    return '<button class="ex" aria-pressed="'+(on?"true":"false")+'" data-ex="'+e.id+'">'+
+      '<span class="mark"></span><span class="body">'+
+        '<span class="nm">'+esc(e.nm)+' <i>'+esc(e.cn)+'</i></span>'+
+        (e.why ? '<span class="why">'+esc(e.why)+'</span>' : '')+
+      '</span><span class="rx">'+esc(e.rx)+'</span></button>';
+  }
+
+  function renderProgram(){
+    var L = lifts(), host = document.getElementById("program"), html = "";
+    var dow = new Date().getDay(), total = 0, done = 0;
+    PROGRAM.forEach(function(s){
+      var isToday = s.dow === dow;
+      total += s.ex.length;
+      html += '<div class="sess'+(isToday?" today":"")+'">'+
+        '<div class="when">'+esc(s.when)+(isToday?' · today':'')+'</div>'+
+        '<h3>'+esc(s.name)+'</h3><div class="aim">'+esc(s.aim)+'</div>'+
+        s.ex.map(function(e){ if(L[e.id]) done++; return exRow(e, L[e.id]); }).join("")+
+      '</div>';
+    });
+    host.innerHTML = html;
+    bindEx(host, L, renderProgram);
+    document.getElementById("programStat").textContent =
+      done ? done + " logged today" : "tap an exercise as you finish it";
+
+    var cl = document.getElementById("coreList");
+    cl.innerHTML = CORE.map(function(e){ return exRow(e, L[e.id]); }).join("");
+    bindEx(cl, L, renderProgram);
+    var pl = document.getElementById("postureList");
+    pl.innerHTML = POSTURE.map(function(e){ return exRow(e, L[e.id]); }).join("");
+    bindEx(pl, L, renderProgram);
+  }
+
+  function bindEx(host, L, after){
+    Array.prototype.forEach.call(host.querySelectorAll("[data-ex]"), function(b){
+      b.onclick = function(){ var k = b.getAttribute("data-ex");
+        if(L[k]) delete L[k]; else L[k] = true;
+        save(); after(); };
+    });
+  }
+
+  /* ── tape, ratios, weight line ───────────── */
+  var W_HI = 76, W_LO = 63, W_GOAL = 65;
+  function renderWeight(){
+    var w = week();
+    if(!w.tape) w.tape = {};
+    if(w.weight && !w.tape.weight) w.tape.weight = w.weight;
+
+    document.getElementById("tape").innerHTML =
+      '<div class="tape">'+ TAPE.map(function(t){
+        return '<label><span>'+esc(t.k)+'</span><i>'+esc(t.cn)+'</i>'+
+          '<input inputmode="decimal" data-t="'+t.id+'" value="'+(w.tape[t.id]||"")+
+          '" placeholder="—" aria-label="'+esc(t.k)+'"></label>';
+      }).join("") +'</div>';
+    Array.prototype.forEach.call(document.querySelectorAll("[data-t]"), function(inp){
+      inp.onchange = function(){
+        var v = parseFloat(inp.value);
+        var k = inp.getAttribute("data-t");
+        if(isNaN(v)) delete w.tape[k]; else w.tape[k] = v;
+        if(k === "weight") w.weight = isNaN(v) ? null : v;
+        save(); renderWeight();
+      };
+    });
+
+    var sh = w.tape.shoulder, wa = w.tape.waist, hi = w.tape.hip;
+    var r = [];
+    r.push('<div>Shoulder : waist<b>'+ (sh&&wa ? (sh/wa).toFixed(2) : "—") +
+      '<em>aesthetic ref ≈ 1.45</em></b></div>');
+    r.push('<div>Waist : hip<b>'+ (wa&&hi ? (wa/hi).toFixed(2) : "—") +
+      '<em>aesthetic ref ≈ 0.70</em></b></div>');
+    document.getElementById("ratios").innerHTML = r.join("");
+
+    var keys = Object.keys(state.weeks).filter(function(k){ return state.weeks[k].weight; }).sort();
+    var host = document.getElementById("wchart");
+    var y = function(kg){ return (W_HI - kg)/(W_HI - W_LO)*100; };
+    var html = '<div class="goal" style="top:'+y(W_GOAL)+'%"><b>'+W_GOAL+' kg</b></div>';
+    if(!keys.length){
+      html += '<div style="position:absolute;left:0;bottom:8px;font-family:var(--data);font-size:11.5px;'+
+        'color:var(--muted)">weight line — secondary to the tape above</div>';
+    }
+    var pts = keys.map(function(k,i){
+      return { x: keys.length===1 ? 50 : i/(keys.length-1)*100, y: y(state.weeks[k].weight) };
+    });
+    pts.forEach(function(p,i){
+      if(i){ var q = pts[i-1];
+        var dx = (p.x-q.x)/100*(host.clientWidth||300), dy = (p.y-q.y)/100*92;
+        var len = Math.sqrt(dx*dx+dy*dy), ang = Math.atan2(dy,dx)*180/Math.PI;
+        html += '<div class="seg" style="left:'+q.x+'%;top:'+q.y+'%;width:'+len+'px;transform:rotate('+ang+'deg)"></div>';
+      }
+      html += '<div class="dot" style="left:'+p.x+'%;top:'+p.y+'%"></div>';
+    });
+    host.innerHTML = html;
+  }
+
+  /* ── story ───────────────────────────────── */
+  function renderStory(){
+    var w = week();
+    document.getElementById("s_open").value = w.story.open || "";
+    document.getElementById("s_turn").value = w.story.turn || "";
+    document.getElementById("s_learn").value = w.story.learn || "";
+    var wrote = (w.story.open||w.story.turn||w.story.learn);
+    document.getElementById("storyStat").textContent = wrote ? "this week is written" : "unwritten";
+
+    var keys = Object.keys(state.weeks).sort().reverse().filter(function(k){
+      var s = state.weeks[k].story; return k !== weekKey() && (s.open||s.turn||s.learn);
+    });
+    document.getElementById("archive").innerHTML = keys.length
+      ? keys.map(function(k){ var s = state.weeks[k].story;
+          return '<details><summary>week of '+k+'</summary>'+
+            (s.open?'<p>'+esc(s.open)+'</p>':'')+
+            (s.turn?'<p>'+esc(s.turn)+'</p>':'')+
+            (s.learn?'<p><em>'+esc(s.learn)+'</em></p>':'')+'</details>';
+        }).join("")
+      : '<div style="font-family:var(--data);font-size:11px;letter-spacing:.08em;color:var(--muted);'+
+        'text-transform:uppercase">past weeks appear here</div>';
+  }
+
+  /* ── morning pages ───────────────────────── */
+  var PAGE_GOAL = 750;
+  function countWords(t){
+    t = (t||"").trim(); if(!t) return 0;
+    var cjk = (t.match(/[\u4e00-\u9fff]/g)||[]).length;
+    var lat = (t.replace(/[\u4e00-\u9fff]/g," ").match(/[A-Za-z0-9'’\-]+/g)||[]).length;
+    return cjk + lat;
+  }
+  function renderPages(){
+    var k = todayKey();
+    if(!state.pages) state.pages = {};
+    var box = document.getElementById("pageText");
+    if(document.activeElement !== box) box.value = state.pages[k] || "";
+    var n = countWords(box.value);
+    document.getElementById("wordCount").textContent = n;
+    var bar = document.getElementById("wordBar");
+    bar.style.width = Math.min(100, n/PAGE_GOAL*100).toFixed(0)+"%";
+    bar.className = n >= PAGE_GOAL ? "full" : "";
+    document.getElementById("pagesStat").textContent =
+      pageStreak() + "-morning streak · " + writtenDays() + " mornings this season";
+  }
+  function pageStreak(){
+    var n = 0, d = new Date();
+    for(var i=0;i<400;i++){
+      var has = countWords(state.pages[todayKey(d)]) >= 100;
+      if(has) n++; else if(i > 0) break;
+      d.setDate(d.getDate()-1);
+    }
+    return n;
+  }
+  function writtenDays(){
+    return Object.keys(state.pages).filter(function(k){
+      return countWords(state.pages[k]) >= 100; }).length;
+  }
+
+  /* ── people file ─────────────────────────── */
+  var TIERS = { inner:"亲密", weak:"弱关系", want:"想认识" };
+  var crmView = "due";
+
+  function daysSince(iso){
+    if(!iso) return null;
+    return Math.floor((new Date(todayKey()+"T00:00:00") - new Date(iso+"T00:00:00"))/86400000);
+  }
+  function renderCRM(){
+    if(!state.people) state.people = [];
+    var views = [
+      { id:"due",    lbl:"due now" },
+      { id:"charge", lbl:"⚡ charges me" },
+      { id:"inner",  lbl:"亲密" },
+      { id:"weak",   lbl:"弱关系" },
+      { id:"want",   lbl:"想认识" },
+      { id:"all",    lbl:"everyone" }
+    ];
+    document.getElementById("crmFilters").innerHTML = views.map(function(v){
+      return '<button class="chip'+(v.id==="charge"?" charge":"")+'" data-v="'+v.id+
+        '" aria-pressed="'+(crmView===v.id)+'">'+esc(v.lbl)+'</button>';
+    }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-v]"), function(b){
+      b.onclick = function(){ crmView = b.getAttribute("data-v"); renderCRM(); };
+    });
+
+    var list = state.people.slice();
+    list.sort(function(a,b){
+      var da = daysSince(a.last), db = daysSince(b.last);
+      var oa = da === null ? 9999 : da - a.cad, ob = db === null ? 9999 : db - b.cad;
+      return ob - oa;
+    });
+    if(crmView === "due") list = list.filter(function(p){
+      var d = daysSince(p.last); return d === null || d >= p.cad; });
+    else if(crmView === "charge") list = list.filter(function(p){ return p.charge; });
+    else if(crmView !== "all") list = list.filter(function(p){ return p.tier === crmView; });
+
+    var host = document.getElementById("people");
+    if(!list.length){
+      host.innerHTML = '<div style="padding:20px 16px;font-family:var(--data);font-size:12px;'+
+        'letter-spacing:.08em;color:var(--muted);text-transform:uppercase">'+
+        (state.people.length ? "nobody in this view — 说明你 cadence 跟上了" :
+         "add the first five people. start with the ones you already miss.")+'</div>';
+    } else {
+      host.innerHTML = list.map(function(p){
+        var d = daysSince(p.last);
+        var over = d === null ? true : d >= p.cad;
+        var txt = d === null ? "never logged" : (d === 0 ? "today" : d + "d ago");
+        var hist = (p.touches||[]).length;
+        return '<div class="person">'+
+          (p.charge ? '<span class="spark" title="charges your battery"></span>' : '')+
+          '<span class="who"><b>'+esc(p.name)+'</b><span>'+esc(p.how||"")+'</span></span>'+
+          '<span class="tier '+p.tier+'">'+esc(TIERS[p.tier])+'</span>'+
+          '<span class="due '+(over?"over":"fresh")+'">'+txt+' / '+p.cad+'d'+
+            (hist>1?' · '+hist+'×':'')+'</span>'+
+          '<input class="next" data-nx="'+p.id+'" value="'+esc(p.next||"")+
+            '" placeholder="next move…" aria-label="Next move for '+esc(p.name)+'">'+
+          '<button class="chip" data-touch="'+p.id+'">saw them</button>'+
+          '<button class="chip charge" data-ch="'+p.id+'" aria-pressed="'+(!!p.charge)+'" '+
+            'title="does this person charge your battery?">⚡</button>'+
+          '<button class="kill" data-pdel="'+p.id+'" style="opacity:.5" aria-label="Remove">×</button>'+
+        '</div>';
+      }).join("");
+    }
+
+    function P(id){ for(var i=0;i<state.people.length;i++) if(state.people[i].id===id) return state.people[i]; }
+    Array.prototype.forEach.call(host.querySelectorAll("[data-touch]"), function(b){
+      b.onclick = function(){ var p = P(b.getAttribute("data-touch"));
+        p.touches = p.touches || [];
+        if(p.touches[p.touches.length-1] !== todayKey()) p.touches.push(todayKey());
+        p.last = todayKey();
+        var w = week(); w.leads.met = (w.leads.met||0)+1;
+        save(); renderCRM(); renderLeads(); };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-ch]"), function(b){
+      b.onclick = function(){ var p = P(b.getAttribute("data-ch"));
+        p.charge = !p.charge; save(); renderCRM(); };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-nx]"), function(inp){
+      inp.onchange = function(){ P(inp.getAttribute("data-nx")).next = inp.value; save(); };
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-pdel]"), function(b){
+      b.onclick = function(){ var id = b.getAttribute("data-pdel");
+        state.people = state.people.filter(function(p){ return p.id !== id; });
+        save(); renderCRM(); };
+    });
+
+    var due = state.people.filter(function(p){
+      var d = daysSince(p.last); return d === null || d >= p.cad; }).length;
+    var chargers = state.people.filter(function(p){ return p.charge; }).length;
+    document.getElementById("crmStat").textContent =
+      state.people.length + " people · " + due + " due · " + chargers + " charge you";
+  }
+
+  /* ── event lab ───────────────────────────── */
+  var EV_STATUS = ["idea","planning","dated","held"];
+  var EVENTS_SEED = [
+    { name:"The interview salon", cn:"客厅访谈",
+      desc:"One guest, one real 45-minute interview in a living room, then everyone eats. You host, you record. The recording is the distribution — and it makes the ask easy, because you're offering someone a room, not asking a favour.",
+      meta:["monthly","10–14 people","2.5 hrs","highest effort"] },
+    { name:"Demo night", cn:"做点东西吧",
+      desc:"Everyone brings something they built in the last month. Five minutes each, no slides, laptop on the table. Works while it's small and stays good.",
+      meta:["every 6 weeks","15–20 people","2 hrs","builder bet"] },
+    { name:"Zone 2 + brunch", cn:"慢跑局",
+      desc:"Your Saturday long run, opened up. Zone 2 is conversational by definition — the pace is the format. Costs you zero extra hours because you were running anyway.",
+      meta:["biweekly","5–8 people","3 hrs","near-zero cost"] },
+    { name:"The one-question dinner", cn:"一个问题晚餐",
+      desc:"Eight people, one question sent three days ahead so nobody arrives empty. Everyone answers before anyone debates. Best question for your people: where does 家 actually live now?",
+      meta:["monthly","8 people","3 hrs","cross-cultural"] },
+    { name:"Living room concert", cn:"家庭音乐会",
+      desc:"You play. Two or three others play. Twenty people on the floor with wine. Rare on purpose — this is the one that makes people describe you to someone else.",
+      meta:["quarterly","20 people","3 hrs","memorable"] },
+    { name:"45 for 45", cn:"办公时间",
+      desc:"A public weekly slot: 45 minutes of your help, in exchange for 45 minutes of theirs. The cheapest sourcing engine for weak ties you will ever run.",
+      meta:["weekly","1 person","45 min","lowest effort"] },
+    { name:"New in the Bay", cn:"新来的",
+      desc:"Climbing plus coffee for people who just moved. You're about to be one of them — hosting the arrivals table is the fastest way to be central in a city you don't know yet.",
+      meta:["monthly","6–10 people","3 hrs","relocation timing"] }
+  ];
+
+  function renderEvents(){
+    if(!state.events) state.events = [];
+    var host = document.getElementById("events");
+    host.innerHTML = state.events.map(function(e){
+      return '<div class="ev'+(e.status==="held"?" held":"")+'">'+
+        '<h3>'+esc(e.name)+' <span class="cn2">'+esc(e.cn)+'</span></h3>'+
+        '<p class="desc">'+esc(e.desc)+'</p>'+
+        '<div class="meta">'+e.meta.map(function(m){return '<span>'+esc(m)+'</span>';}).join("")+'</div>'+
+        '<div class="status">'+ EV_STATUS.map(function(s){
+          return '<button data-ev="'+e.id+'" data-s="'+s+'" aria-pressed="'+(e.status===s)+'">'+s+'</button>';
+        }).join("") +'</div></div>';
+    }).join("");
+    Array.prototype.forEach.call(host.querySelectorAll("[data-ev]"), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute("data-ev"), s = b.getAttribute("data-s");
+        state.events.forEach(function(e){ if(e.id===id) e.status = (e.status===s ? "idea" : s); });
+        save(); renderEvents();
+      };
+    });
+    var live = state.events.filter(function(e){ return e.status !== "idea"; }).length;
+    document.getElementById("evStat").textContent =
+      live ? live + " moving" : "pick one. one is enough to start.";
+  }
+
+  /* ── stats ───────────────────────────────── */
+  function stats(){
+    var s = { cycles:0, words:0, met:0, shipped:0, asked:0, sourced:0, fullWeeks:0,
+              people:0, due:0, held:0, sw:0, wh:9, seasonDay:0, tape:0 };
+    Object.keys(state.days).forEach(function(k){
+      var d = state.days[k];
+      (d.cycles||[]).forEach(function(c){ if(c.result !== "miss") s.cycles++; });
+    });
+    Object.keys(state.pages||{}).forEach(function(k){ s.words += countWords(state.pages[k]); });
+    Object.keys(state.weeks).forEach(function(k){
+      var w = state.weeks[k];
+      s.met += w.leads.met||0; s.shipped += w.leads.shipped||0;
+      s.asked += w.leads.asked||0; s.sourced += w.leads.sourced||0;
+      var t = w.tape||{};
+      if(t.shoulder && t.waist) s.sw = Math.max(s.sw, t.shoulder/t.waist);
+      if(t.waist && t.hip) s.wh = Math.min(s.wh, t.waist/t.hip);
+      if(t.waist) s.tape++;
+    });
+    var mon = mondayOf(new Date()), trained = 0;
+    for(var i=0;i<7;i++){
+      var rec = state.days[todayKey(new Date(mon.getTime()+i*86400000))];
+      if(rec && rec.train) trained++;
+    }
+    s.weekTrained = trained;
+    Object.keys(state.weeks).forEach(function(){});
+    var mw = {};
+    Object.keys(state.days).forEach(function(k){
+      if(!state.days[k].train) return;
+      var wk = weekKey(new Date(k+"T00:00:00"));
+      mw[wk] = (mw[wk]||0)+1;
+    });
+    Object.keys(mw).forEach(function(k){ if(mw[k] >= 5) s.fullWeeks++; });
+    s.people = (state.people||[]).length;
+    s.due = (state.people||[]).filter(function(p){
+      var d = daysSince(p.last); return d === null || d >= p.cad; }).length;
+    s.held = (state.events||[]).filter(function(e){ return e.status === "held"; }).length;
+    s.pagesStreak = pageStreak();
+    s.seasonDay = Math.max(0, Math.round(
+      (new Date(todayKey()+"T00:00:00") - new Date(state.start+"T00:00:00"))/86400000));
+    return s;
+  }
+
+  var BADGES = [
+    { id:"b_first", t:"First split", cn:"第一格", g:"Log one 15-minute cycle",
+      p:function(s){return Math.min(1,s.cycles/1);} },
+    { id:"b_c25",   t:"Twenty-five deep", cn:"25 格", g:"25 focused cycles",
+      p:function(s){return s.cycles/25;} },
+    { id:"b_c100",  t:"The century", cn:"一百格", g:"100 focused cycles — 25 real hours",
+      p:function(s){return s.cycles/100;} },
+    { id:"b_pg7",   t:"Seven mornings", cn:"连写七天", g:"7-day morning pages streak",
+      p:function(s){return s.pagesStreak/7;} },
+    { id:"b_pg30",  t:"A month of mornings", cn:"三十天", g:"30-day pages streak",
+      p:function(s){return s.pagesStreak/30;} },
+    { id:"b_w10k",  t:"Ten thousand words", cn:"一万字", g:"10,000 words written in pages",
+      p:function(s){return s.words/10000;} },
+    { id:"b_ship1", t:"Published once", cn:"发出去了", g:"Ship your first piece",
+      p:function(s){return s.shipped/1;} },
+    { id:"b_ship10",t:"Ten in public", cn:"十篇", g:"10 pieces published",
+      p:function(s){return s.shipped/10;} },
+    { id:"b_ask1",  t:"The first ask", cn:"第一个邀约", g:"Send one interview request",
+      p:function(s){return s.asked/1;} },
+    { id:"b_ask10", t:"Ten asks out", cn:"十个邀约", g:"10 interview requests sent",
+      p:function(s){return s.asked/10;} },
+    { id:"b_room",  t:"The room happened", cn:"第一场办成了", g:"Mark one event held",
+      p:function(s){return s.held/1;} },
+    { id:"b_room3", t:"A regular thing", cn:"办成了三场", g:"Three events held — now it's a series",
+      p:function(s){return s.held/3;} },
+    { id:"b_p20",   t:"Twenty in the file", cn:"二十个人", g:"20 people in the CRM",
+      p:function(s){return s.people/20;} },
+    { id:"b_clear", t:"Nobody overdue", cn:"没人被落下", g:"10+ people, zero past cadence",
+      p:function(s){return s.people>=10 ? (s.due===0?1:0.9) : s.people/10*0.9;} },
+    { id:"b_met25", t:"Twenty-five faces", cn:"见了 25 个人", g:"25 in-person meetings logged",
+      p:function(s){return s.met/25;} },
+    { id:"b_tape",  t:"First tape", cn:"第一次量围度", g:"Log a full set of measurements",
+      p:function(s){return s.tape/1;} },
+    { id:"b_sw",    t:"1.40", cn:"倒三角成立", g:"Shoulder : waist reaches 1.40",
+      p:function(s){return s.sw/1.40;} },
+    { id:"b_wh",    t:"0.72", cn:"腰臀比", g:"Waist : hip down to 0.72",
+      p:function(s){return s.wh<9 ? Math.min(1, 0.72/s.wh) : 0;} },
+    { id:"b_full",  t:"A perfect week", cn:"一周全勤", g:"All five sessions in one week",
+      p:function(s){return s.fullWeeks/1;} },
+    { id:"b_full4", t:"Four perfect weeks", cn:"四周全勤", g:"Five sessions a week, four times",
+      p:function(s){return s.fullWeeks/4;} },
+    { id:"b_d30",   t:"Thirty days in", cn:"一个月了", g:"Day 30 of the season",
+      p:function(s){return s.seasonDay/30;} },
+    { id:"b_half",  t:"Halfway", cn:"过半", g:"Day 92 — the turn of the season",
+      p:function(s){return s.seasonDay/92;} },
+    { id:"b_end",   t:"You finished a season", cn:"整整半年", g:"All 183 days",
+      p:function(s){return s.seasonDay/183;} }
+  ];
+
+  function renderBadges(){
+    if(!state.badges) state.badges = {};
+    var s = stats(), fresh = [];
+    BADGES.forEach(function(b){
+      if(!state.badges[b.id] && b.p(s) >= 1){ state.badges[b.id] = todayKey(); fresh.push(b); }
+    });
+    if(fresh.length) save();
+
+    var won = BADGES.filter(function(b){ return state.badges[b.id]; });
+    var open = BADGES.filter(function(b){ return !state.badges[b.id]; })
+      .map(function(b){ return { b:b, v:Math.min(0.999, b.p(s)) }; })
+      .sort(function(x,y){ return y.v - x.v; });
+    var nearIds = open.slice(0,3).map(function(o){ return o.b.id; });
+
+    var order = won.map(function(b){ return {b:b, v:1}; }).concat(open);
+    document.getElementById("badges").innerHTML = order.map(function(o){
+      var b = o.b, got = state.badges[b.id];
+      return '<div class="bg '+(got?"":"locked ")+(!got&&nearIds.indexOf(b.id)>-1?"near":"")+'">'+
+        '<div class="t">'+esc(b.t)+'</div><div class="c">'+esc(b.cn)+'</div>'+
+        (got ? '<div class="won">won '+got+'</div>'
+             : '<div class="g">'+esc(b.g)+'</div>'+
+               '<div class="prog"><i style="width:'+Math.round(o.v*100)+'%"></i></div>')+
+      '</div>';
+    }).join("");
+    document.getElementById("badgeStat").textContent =
+      won.length + " of " + BADGES.length + " won" +
+      (fresh.length ? " · just unlocked: " + fresh[0].t : "");
+  }
+
+  /* ── calendar ────────────────────────────── */
+  var calView = "month", calAnchor = new Date();
+  var DOW = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+  function dayLoad(k){
+    var d = state.days[k], n = 0;
+    var pg = countWords((state.pages||{})[k]) >= 100;
+    var tr = !!(d && d.train);
+    var cy = d ? (d.cycles||[]).filter(function(c){return c.result!=="miss";}).length : 0;
+    n = (pg?1:0) + (tr?1:0) + Math.min(2, Math.ceil(cy/3));
+    return { pg:pg, tr:tr, cy:cy, level:Math.min(4,n) };
+  }
+  function msOn(k){ return (state.milestones||[]).filter(function(m){ return m.date === k; }); }
+
+  function cell(dt, opts){
+    var k = todayKey(dt), L = dayLoad(k), ms = msOn(k);
+    var out = opts.out ? ' data-out="1"' : "";
+    var cls = "cd has"+L.level + (k===todayKey()?" today":"");
+    var inner = "";
+    if(calView === "month" || calView === "week"){
+      inner += '<span class="n">'+dt.getDate()+'</span>';
+      if(calView === "week"){
+        inner += '<div class="plan2">'+esc(WEEK[(dt.getDay()+6)%7].plan)+'</div>';
+      }
+      inner += '<div class="marks">'+
+        (L.pg?'<span class="m pg"></span>':'')+
+        (L.tr?'<span class="m tr"></span>':'')+
+        Array(Math.min(6,L.cy)+1).join('<span class="m"></span>')+
+        (ms.length?'<span class="m ms"></span>':'')+'</div>';
+      if(calView === "week" && ms.length)
+        inner += ms.map(function(m){ return '<div class="ml">◆ '+esc(m.title)+'</div>'; }).join("");
+    } else {
+      if(ms.length) inner = '<span class="m ms" style="position:absolute;right:2px;top:2px"></span>';
+    }
+    var title = k + (L.cy?" · "+L.cy+" cycles":"") + (L.pg?" · pages":"") + (L.tr?" · trained":"") +
+      (ms.length?" · "+ms.map(function(m){return m.title;}).join(", "):"");
+    return '<button class="'+cls+'"'+out+' title="'+esc(title)+'">'+inner+'</button>';
+  }
+
+  function renderCal(){
+    var host = document.getElementById("cal"), html = "", range = "";
+    var a = new Date(calAnchor), fmt;
+    host.className = "cal " + calView;
+
+    if(calView === "year"){
+      var start = mondayOf(new Date(state.start+"T00:00:00"));
+      DOW.forEach(function(d){ html += '<div class="dow">'+d[0]+'</div>'; });
+      host.style.gridTemplateColumns = "repeat(7,1fr)";
+      for(var i=0;i<196;i++){
+        var dt = new Date(start.getTime()+i*86400000);
+        html += cell(dt, { out: dt > new Date(new Date(state.start+"T00:00:00").getTime()+183*86400000) });
+      }
+      range = "the whole season";
+    } else if(calView === "quarter"){
+      var qs = mondayOf(a); qs.setDate(qs.getDate()-42);
+      DOW.forEach(function(d){ html += '<div class="dow">'+d+'</div>'; });
+      for(var j=0;j<91;j++){
+        var dq = new Date(qs.getTime()+j*86400000);
+        html += cell(dq, {});
+      }
+      fmt = { month:"short", day:"numeric" };
+      range = qs.toLocaleDateString("en-US",fmt) + " → " +
+        new Date(qs.getTime()+90*86400000).toLocaleDateString("en-US",fmt);
+    } else if(calView === "month"){
+      var first = new Date(a.getFullYear(), a.getMonth(), 1);
+      var grid = mondayOf(first);
+      DOW.forEach(function(d){ html += '<div class="dow">'+d+'</div>'; });
+      for(var m=0;m<42;m++){
+        var dm = new Date(grid.getTime()+m*86400000);
+        html += cell(dm, { out: dm.getMonth() !== a.getMonth() });
+      }
+      range = a.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+    } else {
+      var ws = mondayOf(a);
+      DOW.forEach(function(d){ html += '<div class="dow">'+d+'</div>'; });
+      for(var w=0;w<7;w++) html += cell(new Date(ws.getTime()+w*86400000), {});
+      range = "week of " + ws.toLocaleDateString("en-US",{month:"short",day:"numeric"});
+    }
+    host.innerHTML = html;
+    document.getElementById("calRange").textContent = range;
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-cv]"), function(b){
+      b.setAttribute("aria-pressed", calView === b.getAttribute("data-cv"));
+      b.onclick = function(){ calView = b.getAttribute("data-cv"); renderCal(); };
+    });
+
+    var s = stats();
+    document.getElementById("calStat").textContent =
+      "day " + s.seasonDay + " of 183 · " + s.cycles + " cycles · " + s.words + " words";
+    renderDated();
+  }
+
+  function calStep(dir){
+    if(calView === "week") calAnchor.setDate(calAnchor.getDate()+7*dir);
+    else if(calView === "month") calAnchor.setMonth(calAnchor.getMonth()+dir);
+    else if(calView === "quarter") calAnchor.setDate(calAnchor.getDate()+91*dir);
+    renderCal();
+  }
+
+  function renderDated(){
+    if(!state.milestones) state.milestones = [];
+    var today = todayKey();
+    var list = state.milestones.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+    document.getElementById("datedList").innerHTML = list.map(function(m){
+      var d = Math.round((new Date(m.date+"T00:00:00") - new Date(today+"T00:00:00"))/86400000);
+      var lbl = d === 0 ? "today" : (d > 0 ? "in "+d+"d" : Math.abs(d)+"d ago");
+      return '<span class="pill'+(d>=0&&d<=14?" soon":"")+'"><b>'+esc(m.title)+'</b>'+
+        m.date+' · '+lbl+' <button class="kill" data-msdel="'+m.id+'" style="opacity:.6">×</button></span>';
+    }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-msdel]"), function(b){
+      b.onclick = function(){
+        state.milestones = state.milestones.filter(function(m){ return m.id !== b.getAttribute("data-msdel"); });
+        save(); renderCal();
+      };
+    });
+  }
+
+  /* ── data vault ──────────────────────────── */
+  function bytes(n){
+    return n < 1024 ? n+" B" : (n < 1048576 ? (n/1024).toFixed(0)+" KB" : (n/1048576).toFixed(2)+" MB");
+  }
+  function fullBackup(){
+    return JSON.stringify({
+      app:"season-os", version:1, exportedAt:new Date().toISOString(), data:state
+    }, null, 1);
+  }
+  function download(name, text, type){
+    try{
+      var blob = new Blob([text], { type: type || "application/json" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 800);
+      return true;
+    }catch(e){ return false; }
+  }
+  function pagesMarkdown(){
+    var keys = Object.keys(state.pages||{}).filter(function(k){
+      return (state.pages[k]||"").trim(); }).sort();
+    var out = ["# Morning pages\n", "_" + keys.length + " mornings · " +
+      keys.reduce(function(n,k){ return n + countWords(state.pages[k]); },0) + " words_\n"];
+    keys.forEach(function(k){
+      var dt = new Date(k+"T00:00:00");
+      out.push("\n## " + dt.toLocaleDateString("en-US",
+        {weekday:"long", year:"numeric", month:"long", day:"numeric"}) + "\n");
+      out.push(state.pages[k].trim() + "\n");
+    });
+    return out.join("\n");
+  }
+  function renderVault(){
+    var core = JSON.stringify(coreOf()), pg = JSON.stringify(state.pages||{});
+    var s = stats();
+    var days = Object.keys(state.days).length;
+    var mornings = Object.keys(state.pages||{}).filter(function(k){
+      return countWords(state.pages[k]) >= 1; }).length;
+    var touches = (state.people||[]).reduce(function(n,p){ return n + (p.touches||[]).length; }, 0);
+    var cycleRows = 0;
+    Object.keys(state.days).forEach(function(k){ cycleRows += (state.days[k].cycles||[]).length; });
+
+    document.getElementById("footStats").innerHTML =
+      [["days recorded", days],
+       ["mornings written", mornings],
+       ["words kept", s.words],
+       ["cycles logged", cycleRows],
+       ["touches logged", touches],
+       ["total size", bytes(core.length + pg.length)]]
+      .map(function(r){ return '<div><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'; }).join("");
+
+    document.getElementById("vaultStat").textContent =
+      bytes(core.length) + " core · " + bytes(pg.length) + " pages";
+
+    var el = document.getElementById("lastExport");
+    if(!state.lastExport){ el.className = "stale warn"; el.textContent = "never backed up"; }
+    else {
+      var d = Math.round((new Date(todayKey()+"T00:00:00") -
+        new Date(state.lastExport+"T00:00:00"))/86400000);
+      el.className = "stale" + (d > 14 ? " warn" : "");
+      el.textContent = d === 0 ? "backed up today" : "last backup " + d + "d ago";
+    }
+  }
+  function markExported(){ state.lastExport = todayKey(); save(); renderVault(); }
+
+  function restore(text, msgEl){
+    var parsed;
+    try { parsed = JSON.parse(text); }
+    catch(e){ msgEl.className = "stale warn"; msgEl.textContent = "that isn't valid JSON"; return; }
+    var d = parsed && parsed.data ? parsed.data : parsed;
+    if(!d || typeof d !== "object" || (!d.todos && !d.days && !d.pages)){
+      msgEl.className = "stale warn"; msgEl.textContent = "doesn't look like a season backup"; return;
+    }
+    if(!window.confirm("Replace everything currently stored with this backup?")) return;
+    state = d;
+    state.days = state.days || {}; state.weeks = state.weeks || {}; state.todos = state.todos || [];
+    state.pages = state.pages || {}; state.people = state.people || []; state.events = state.events || [];
+    state.milestones = state.milestones || []; state.badges = state.badges || {};
+    Object.keys(state.pages).forEach(touchMonth);
+    save(); renderAll();
+    msgEl.className = "stale"; msgEl.textContent = "restored";
+  }
+
+  /* ── boot ────────────────────────────────── */
+  function bind(){
+    var box = document.getElementById("pageText");
+    box.addEventListener("input", function(){
+      if(!state.pages) state.pages = {};
+      state.pages[todayKey()] = box.value;
+      touchMonth(todayKey());
+      save(); renderPages();
+    });
+    document.getElementById("mineTopic").onclick = function(){
+      var t = window.prompt("What's the 选题 hiding in this morning's pages?");
+      if(!t || !t.trim()) return;
+      state.todos.push({ id:String(Math.random()).slice(2,10), text:t.trim(),
+        pillar:"ip", done:false, created: todayKey() });
+      save(); renderPillars();
+      var el = document.getElementById("pagesStat");
+      el.textContent = "选题 sent to Personal IP →";
+      setTimeout(renderPages, 2600);
+    };
+    document.getElementById("addPerson").onclick = function(){
+      var n = document.getElementById("p_name");
+      if(!n.value.trim()) { n.focus(); return; }
+      state.people.push({
+        id: String(Math.random()).slice(2,10),
+        name: n.value.trim(),
+        how: document.getElementById("p_how").value.trim(),
+        tier: document.getElementById("p_tier").value,
+        cad: +document.getElementById("p_cad").value,
+        last: null, next: "", charge: false
+      });
+      n.value = ""; document.getElementById("p_how").value = "";
+      save(); renderCRM(); n.focus();
+    };
+    document.getElementById("exportJson").onclick = function(){
+      var name = "season-os-" + todayKey() + ".json";
+      if(download(name, fullBackup())) markExported();
+      else {
+        document.getElementById("importBox").value = fullBackup();
+        document.getElementById("importMsg").textContent = "download blocked — copy the text above";
+      }
+    };
+    document.getElementById("exportMd").onclick = function(){
+      download("morning-pages-" + todayKey() + ".md", pagesMarkdown(), "text/markdown");
+    };
+    document.getElementById("copyJson").onclick = function(){
+      var msg = document.getElementById("importMsg");
+      var txt = fullBackup();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(function(){
+          msg.className = "stale"; msg.textContent = "copied — paste it somewhere safe"; markExported();
+        }).catch(function(){ document.getElementById("importBox").value = txt; });
+      } else { document.getElementById("importBox").value = txt; }
+    };
+    document.getElementById("importJson").onclick = function(){
+      restore(document.getElementById("importBox").value, document.getElementById("importMsg"));
+    };
+    document.getElementById("importFile").onchange = function(e){
+      var f = e.target.files && e.target.files[0]; if(!f) return;
+      var r = new FileReader();
+      r.onload = function(){ restore(String(r.result), document.getElementById("importMsg")); };
+      r.readAsText(f);
+    };
+    document.getElementById("calPrev").onclick = function(){ calStep(-1); };
+    document.getElementById("calNext").onclick = function(){ calStep(1); };
+    document.getElementById("calToday").onclick = function(){ calAnchor = new Date(); renderCal(); };
+    document.getElementById("addMs").onclick = function(){
+      var t = document.getElementById("ms_title"), d = document.getElementById("ms_date");
+      if(!t.value.trim() || !d.value){ (t.value.trim()?d:t).focus(); return; }
+      if(!state.milestones) state.milestones = [];
+      state.milestones.push({ id:String(Math.random()).slice(2,10), title:t.value.trim(), date:d.value });
+      t.value = ""; d.value = ""; save(); renderCal();
+    };
+    document.getElementById("saveStory").onclick = function(){
+      var w = week();
+      w.story = {
+        open: document.getElementById("s_open").value,
+        turn: document.getElementById("s_turn").value,
+        learn: document.getElementById("s_learn").value
+      };
+      save(); renderStory();
+      var el = document.getElementById("storySaved");
+      el.textContent = "saved · 这周有故事了";
+      setTimeout(function(){ el.textContent = ""; }, 2600);
+    };
+    document.addEventListener("keydown", function(e){
+      if(e.key === "n" && (e.metaKey||e.ctrlKey) && !run){ e.preventDefault(); openPlan(); }
+    });
+  }
+
+  function renderAll(){
+    renderMast(); renderCal(); renderBadges(); renderPages(); renderLane(); renderCycle();
+    renderPillars(); renderSpine(); renderWeek(); renderProgram(); renderCRM(); renderEvents();
+    renderLeads(); renderWeight(); renderStory(); renderVault();
+  }
+
+  load().then(function(saved){
+    state = saved || blank();
+    if(!state.start) state.start = todayKey();
+    state.days = state.days || {}; state.weeks = state.weeks || {}; state.todos = state.todos || [];
+    state.pages = state.pages || {}; state.people = state.people || []; state.events = state.events || [];
+    state.milestones = state.milestones || []; state.badges = state.badges || {};
+    state.people.forEach(function(p){ if(!p.touches) p.touches = p.last ? [p.last] : []; });
+    if(!state.events.length){
+      EVENTS_SEED.forEach(function(e, i){
+        state.events.push({ id:"ev"+i, name:e.name, cn:e.cn, desc:e.desc, meta:e.meta, status:"idea" });
+      });
+      save();
+    }
+    if(!state.seeded){
+      PILLARS.forEach(function(p){
+        p.seed.forEach(function(t){
+          state.todos.push({ id:String(Math.random()).slice(2,10), text:t, pillar:p.id,
+            done:false, created: todayKey() });
+        });
+      });
+      state.seeded = true; save();
+    }
+    if(!state.seeded2){
+      ["周日量围度 + 同角度同光线拍对比照","练前吃东西 — 不空腹训练（Stacy Sims）",
+       "把蛋白质吃够，减脂期更要吃","找一个会拍泳装/体态的摄影师聊聊"]
+        .forEach(function(t){
+          state.todos.push({ id:String(Math.random()).slice(2,10), text:t, pillar:"body",
+            done:false, created: todayKey() });
+        });
+      state.seeded2 = true; save();
+    }
+    bind(); renderAll(); booted = true;
+    setInterval(function(){ if(!run) renderLane(); }, 60000);
+  }).catch(function(err){
+    document.getElementById("storeWarn").textContent = "Couldn't load saved data — starting fresh.";
+    state = blank(); bind(); renderAll();
+  });
+})();
+</script>
